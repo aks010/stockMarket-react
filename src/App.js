@@ -1,7 +1,12 @@
+import WrapperContainer from "./container/WrapperContainer";
+import { BrowserRouter as Router } from "react-router-dom";
+
 function App() {
   return (
     <div className="App">
-      STOCK MARKET APPLICATION
+      <Router>
+        <WrapperContainer />
+      </Router>
     </div>
   );
 }
