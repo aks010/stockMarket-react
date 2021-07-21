@@ -1,37 +1,31 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import API from "../../../Api";
-import UpdateCompany from "./UpdateCompany";
+// import API2 from "../../../Api2";
+import API1 from "../../../Api2";
 
-class ListAllCompanies extends React.Component {
+class ListIPOs extends React.Component {
   state = {
-    companyList: [],
+    ipoList: [],
   };
 
   componentDidMount = async () => {
-    const response = await API.get("company/list");
-    console.log(response.data);
-    this.setState({ companyList: response.data });
+    const response = await API1.get("ipo/list");
+    console.log("RESPONESSEES");
+    console.log(response);
+    this.setState({ ipoList: response.data });
   };
 
   renderList = () => {
-    let ui = [];
-    return this.state.companyList.map((company) => {
-      let exchangeList = [];
-      company.compStockMap.forEach((o) =>
-        exchangeList.push(o.stockExchange.exchangeName)
-      );
-
-      let exchanges = "";
-      exchangeList.forEach((o) => (exchanges += o + ", "));
-
+    console.log(this.state);
+    return this.state.ipoList.map((ipo) => {
       return (
         <div class="row mt-3 p-3 bg-light">
-          <div class=" col col-sm-3 m-3">{company.companyName}</div>
-          <div class="col col-sm-3 m-3">{exchanges}</div>
-          <div class="col col-sm-4 m-3">{company.companyBrief}</div>
+          <div class=" col col-sm-2 m-3">{ipo.pricePerShares}</div>
+          <div class="col col-sm-2 m-3">{ipo.totalNumberOfShares}</div>
+          <div class="col col-sm-3 m-3">{ipo.openDateTime}</div>
+          <div class="col col-sm-3 m-3">{ipo.remarks}</div>
           <Link
-            to={`/admin/company/update/${company.companyName}`}
+            to={`/admin/ipo/update/${ipo.exchangeName}`}
             class="col col-sm m-3 btn btn-outline-success btn-sm align-self-center"
           >
             Edit
@@ -41,8 +35,6 @@ class ListAllCompanies extends React.Component {
     });
     // console.log("Print");
     // console.log(ui);
-
-    return <div>Hello</div>;
   };
 
   render() {
@@ -51,17 +43,15 @@ class ListAllCompanies extends React.Component {
     return (
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
-          <h4 style={{ display: "flex", alignItems: "center" }}>
-            List of Companies
-          </h4>
+          <h4 style={{ display: "flex", alignItems: "center" }}>IPO List</h4>
           <div class="d-flex">
             <Link
               type="button"
-              to="/admin/company/new"
+              to="/admin/ipo/new"
               class="btn btn-outline-success btn-sm ms-3 md-3 "
               style={{ display: "flex", alignItems: "center" }}
             >
-              Add New Company
+              Add New IPO
             </Link>
             <button
               type="button"
@@ -72,8 +62,8 @@ class ListAllCompanies extends React.Component {
           </div>
         </div>
 
-        <div class="container mt-5 d-flex justify-content-between">
-          <div>COMPANIES</div>
+        {/* <div class="container mt-5 d-flex justify-content-between">
+          <div>Stock Exchanges</div>
 
           <div>
             <div class="input-group input-group-sm mb-3">
@@ -89,7 +79,7 @@ class ListAllCompanies extends React.Component {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div class="mt-3 .bg-light">
           {this.renderList()}
@@ -117,4 +107,4 @@ class ListAllCompanies extends React.Component {
   }
 }
 
-export default ListAllCompanies;
+export default ListIPOs;

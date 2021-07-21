@@ -4,8 +4,8 @@ import Navbar from "./Navbar";
 import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import ImportData from "../components/adminComponents/ImportData";
 import ManageCompany from "../components/adminComponents/manageCompany/ManageCompany";
-import ManageExchange from "../components/adminComponents/ManageExchange";
-import UpdateIPODetails from "../components/adminComponents/UpdateIPODetails";
+import ManageExchange from "../components/adminComponents/manageExchange/ManageExchange";
+import ManageIPO from "../components/adminComponents/manageIPO/ManageIPO";
 
 class AdminWrapperContainer extends React.Component {
   state = {
@@ -30,8 +30,8 @@ class AdminWrapperContainer extends React.Component {
           <Route path={`/admin/exchange`}>
             <ManageExchange />
           </Route>
-          <Route path={`/admin/ipo/update`}>
-            <UpdateIPODetails />
+          <Route path={`/admin/ipo`}>
+            <ManageIPO />
           </Route>
           <Router path="/user">{/* <UserWrapperContainer /> */}</Router>
         </Switch>

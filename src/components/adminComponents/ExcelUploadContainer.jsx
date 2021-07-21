@@ -83,14 +83,14 @@ export default class SheetJSApp extends React.Component {
             <DataInput handleFile={this.handleFile} />
           </div>
         </div>
-        <div className="row mt-3">
-          <div className="col-xs-12">
+        <div className="row mt-4 mb-3">
+          <div className="d-flex col-xs-12 flex-row-reverse">
             <button
               disabled={!this.state.data.length}
-              className="btn btn-success"
+              className="btn btn-success col-md-3"
               onClick={this.exportFile}
             >
-              Upload
+              Upload Excel
             </button>
           </div>
         </div>
@@ -155,7 +155,7 @@ class DataInput extends React.Component {
   }
   render() {
     return (
-      <form className="form-inline" class="mt-3">
+      <form className="form-inline" class="mt-5">
         <div className="form-group">
           {/* <label     htmlFor="file">Spreadsheet</label> */}
           <input

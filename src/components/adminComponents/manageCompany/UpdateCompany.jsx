@@ -3,7 +3,7 @@ import React from "react";
 import { COMPANY_JSON_FIELD } from "../../../globals/configs";
 
 import { Link } from "react-router-dom";
-import API from "../../../Api";
+import API from "../../../Api2";
 import { RenderMessage } from "../../../globals/helper";
 
 class UpdateCompany extends React.Component {
@@ -115,7 +115,12 @@ class UpdateCompany extends React.Component {
       } catch (e) {
         console.log("Error");
         console.log(e.response);
-        this.handleResponse(e.response);
+        if (e.response) this.handleResponse(e.response);
+        else
+          this.handleResponse({
+            status: null,
+            data: { message: "Unable to Connect to Server" },
+          });
       }
 
       console.log(response);

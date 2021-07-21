@@ -1,37 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import API from "../../../Api";
-import UpdateCompany from "./UpdateCompany";
+import API2 from "../../../Api2";
+import API1 from "../../../Api2";
 
-class ListAllCompanies extends React.Component {
+class ListExchanges extends React.Component {
   state = {
-    companyList: [],
+    exchangeList: [],
   };
 
   componentDidMount = async () => {
-    const response = await API.get("company/list");
-    console.log(response.data);
-    this.setState({ companyList: response.data });
+    const response = await API2.get("stockExchange/list");
+    console.log("RESPONESSEES");
+    console.log(response);
+    this.setState({ exchangeList: response.data });
   };
 
   renderList = () => {
-    let ui = [];
-    return this.state.companyList.map((company) => {
+    console.log(this.state);
+    return this.state.exchangeList.map((exchange) => {
       let exchangeList = [];
-      company.compStockMap.forEach((o) =>
-        exchangeList.push(o.stockExchange.exchangeName)
-      );
-
-      let exchanges = "";
-      exchangeList.forEach((o) => (exchanges += o + ", "));
+      // company.compStockMap.forEach((o) =>
+      //   exchangeList.push(o.stockExchange.exchangeName)
+      // );
 
       return (
         <div class="row mt-3 p-3 bg-light">
-          <div class=" col col-sm-3 m-3">{company.companyName}</div>
-          <div class="col col-sm-3 m-3">{exchanges}</div>
-          <div class="col col-sm-4 m-3">{company.companyBrief}</div>
+          <div class=" col col-sm-2 m-3">{exchange.exchangeName}</div>
+          <div class="col col-sm-2 m-3">{exchange.remarks}</div>
+          <div class="col col-sm-3 m-3">{exchange.contactAddress}</div>
+          <div class="col col-sm-3 m-3">{exchange.brief}</div>
           <Link
-            to={`/admin/company/update/${company.companyName}`}
+            to={`/admin/exchange/update/${exchange.exchangeName}`}
             class="col col-sm m-3 btn btn-outline-success btn-sm align-self-center"
           >
             Edit
@@ -52,16 +51,16 @@ class ListAllCompanies extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            List of Companies
+            Stock Exchanges List
           </h4>
           <div class="d-flex">
             <Link
               type="button"
-              to="/admin/company/new"
+              to="/admin/exchange/new"
               class="btn btn-outline-success btn-sm ms-3 md-3 "
               style={{ display: "flex", alignItems: "center" }}
             >
-              Add New Company
+              Add New Stock Exchange
             </Link>
             <button
               type="button"
@@ -72,8 +71,8 @@ class ListAllCompanies extends React.Component {
           </div>
         </div>
 
-        <div class="container mt-5 d-flex justify-content-between">
-          <div>COMPANIES</div>
+        {/* <div class="container mt-5 d-flex justify-content-between">
+          <div>Stock Exchanges</div>
 
           <div>
             <div class="input-group input-group-sm mb-3">
@@ -89,7 +88,7 @@ class ListAllCompanies extends React.Component {
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div class="mt-3 .bg-light">
           {this.renderList()}
@@ -117,4 +116,4 @@ class ListAllCompanies extends React.Component {
   }
 }
 
-export default ListAllCompanies;
+export default ListExchanges;

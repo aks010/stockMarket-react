@@ -35,3 +35,28 @@ export const COMPANY_JSON_FIELD = {
   companyBrief: COMPANY_BRIEF,
   sector: SECTOR,
 };
+
+const EXCHANGE_NAME = "Name";
+const CONTACT_ADDRESS = "Contact Address";
+const BRIEF = "Brief";
+const REMARKS = "Remarks";
+
+export const EXCHANGE_JSON_FIELD = {
+  exchangeName: EXCHANGE_NAME,
+  brief: BRIEF,
+  contactAddress: CONTACT_ADDRESS,
+  remarks: REMARKS,
+};
+
+const PRICE_PER_SHARE = "Price Per Share";
+const TOTAL_NUMBER_OF_SHARES = "Total Number of Shares";
+const OPEN_DATA_TIME = "Open Date Time";
+const IPO_REMARKS = "Remarks";
+
+export const IPO_JSON_FIELD = {
+  pricePerShare: PRICE_PER_SHARE,
+  totalNumberOfShares: TOTAL_NUMBER_OF_SHARES,
+  openDateTime: OPEN_DATA_TIME,
+  remarks: IPO_REMARKS,
+  company: "Company",
+};

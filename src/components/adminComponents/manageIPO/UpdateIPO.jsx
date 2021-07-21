@@ -1,21 +1,21 @@
 import React from "react";
+
+import { EXCHANGE_JSON_FIELD } from "../../../globals/configs";
+
 import { Link } from "react-router-dom";
-import { COMPANY_JSON_FIELD } from "../../../globals/configs";
-import API from "../../../Api";
+import API2 from "../../../Api2";
+import API1 from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
-class AddNewCompany extends React.Component {
+class UpdateCompany extends React.Component {
   state = {
     data: {
-      companyName: "",
-      ceo: "",
-      turnover: null,
-
-      boardOfDirectors: "",
-      companyBrief: "",
+      exchangeName: "",
+      contactAddress: "",
+      remarks: "",
+      brief: "",
     },
-    sector: "",
-    sectorList: [],
+    currExchange: "",
     displayMessage: false,
     messageUI: null,
   };
@@ -23,16 +23,11 @@ class AddNewCompany extends React.Component {
   clearForm = () => {
     this.setState({
       data: {
-        companyName: "",
-        ceo: "",
-        turnover: null,
-
-        boardOfDirectors: "",
-        companyBrief: "",
+        exchangeName: "",
+        contactAddress: "",
+        remarks: "",
+        brief: "",
       },
-      sector: "",
-      companyName: "",
-      // sectorList: [],
       displayMessage: false,
       messageUI: null,
     });
@@ -47,10 +42,17 @@ class AddNewCompany extends React.Component {
   };
 
   componentDidMount = async () => {
-    const sectorResponse = await API.get("/sectors/list");
+    let pathSplit = window.location.pathname.split("/");
+    const currExchange = pathSplit[pathSplit.length - 1];
+    console.log(currExchange);
 
-    const sectorList = sectorResponse.data;
-    this.setState({ sectorList });
+    const response = await API2.get(`/stockExchange/${currExchange}`);
+    console.log(response.data);
+    const data = {};
+    Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
+    console.log(data);
+
+    this.setState({ data, currExchange });
   };
 
   handleFormInput = (e) => {
@@ -59,15 +61,11 @@ class AddNewCompany extends React.Component {
     this.setState({ data });
   };
 
-  handleSectorInput = (e) => {
-    this.setState({ sector: e.target.value });
-  };
-
   handleResponse = (response) => {
-    if (response.status == 201) {
+    if (response.status == 201 || response.status == 200) {
       const messageUI = RenderMessage(
         201,
-        "Successfully Created Company!!",
+        "Successfully Updated Company!!",
         this.closeDisplayMessage
       );
       this.setState({ messageUI, displayMessage: true });
@@ -84,31 +82,27 @@ class AddNewCompany extends React.Component {
   handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = this.state.data;
+    delete data["sector"];
+    console.log("CALLES");
 
-    if (this.state.sector == "") {
-      this.setState({
-        messageUI: RenderMessage(400, "Sector Cannot be empty!"),
-        displayMessage: true,
-      });
-    } else {
-      let response;
-      try {
-        response = await API.post(
-          `/company/new/${this.state.sector}`,
-          this.state.data
-        );
-        this.handleResponse(response);
-      } catch (e) {
-        console.log("Error");
-        console.log(e.response);
-        if (e.response) this.handleResponse(e.response);
-        else
-          this.handleResponse({
-            status: null,
-            data: { message: "Unable to Connect to Server" },
-          });
-      }
+    let response;
+    try {
+      response = await API2.put(
+        `/stockExchange/update/${this.state.currExchange}`,
+        this.state.data
+      );
+      await API1.put(
+        `/stockExchange/update/${this.state.currExchange}`,
+        this.state.data
+      );
+      this.handleResponse(response);
+    } catch (e) {
+      console.log("Error");
+      console.log(e.response);
+      this.handleResponse(e.response);
     }
+
+    console.log(response);
   };
 
   validateFormInput = () => {
@@ -134,32 +128,18 @@ class AddNewCompany extends React.Component {
     });
   };
 
-  getFieldWidth = (field) => {
-    if (field == "sector" || field == "boardOfDirectors") return 6;
-    if (field == "companyBrief") return 12;
-    else return 4;
-  };
-
-  renderSectorList = () => {
-    return this.state.sectorList.map((el) => {
-      return <option>{el.sectorName}</option>;
-    });
-  };
-
   render() {
-    console.log("HELLO");
-    console.log(this.props);
+    console.log("printing state");
     console.log(this.state);
-    // console.log(Object.keys(this.state.data).map((el) => el));
     return (
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            Add New Company
+            Update Company
           </h4>
           <div class="d-flex">
             <Link
-              to="/admin/company/list"
+              to="/admin/ipo/list"
               type="button"
               class="btn btn-outline-secondary btn-sm ms-3 md-3"
               style={{ display: "flex", alignItems: "center" }}
@@ -174,15 +154,15 @@ class AddNewCompany extends React.Component {
 
           <form class="row g-3 needs-validation" noValidate>
             <div class={`col-md-4`}>
-              <label for={"companyName"} class="form-label">
-                {COMPANY_JSON_FIELD["companyName"]}
+              <label for={"exchangeName"} class="form-label">
+                {EXCHANGE_JSON_FIELD["exchangeName"]}
               </label>
               <input
                 type="text"
                 class="form-control"
-                id={"companyName"}
-                value={this.state.data["companyName"]}
-                name={"companyName"}
+                id={"exchangeName"}
+                value={this.state.data["exchangeName"]}
+                name={"exchangeName"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -190,15 +170,15 @@ class AddNewCompany extends React.Component {
             </div>
 
             <div class={`col-md-4`}>
-              <label for={"ceo"} class="form-label">
-                {COMPANY_JSON_FIELD["ceo"]}
+              <label for={"contactAddress"} class="form-label">
+                {EXCHANGE_JSON_FIELD["contactAddress"]}
               </label>
               <input
                 type="text"
                 class="form-control"
-                id={"ceo"}
-                value={this.state.data["ceo"]}
-                name={"ceo"}
+                id={"contactAddress"}
+                value={this.state.data["contactAddress"]}
+                name={"contactAddress"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -206,51 +186,15 @@ class AddNewCompany extends React.Component {
             </div>
 
             <div class={`col-md-4`}>
-              <label for={"turnover"} class="form-label">
-                {COMPANY_JSON_FIELD["turnover"]}
-              </label>
-              <input
-                type="number"
-                class="form-control"
-                id={"turnover"}
-                value={this.state.data["turnover"]}
-                name={"turnover"}
-                onChange={this.handleFormInput}
-                required
-              />
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-6`}>
-              <label for={"sector"} class="form-label">
-                {COMPANY_JSON_FIELD["sector"]}
-              </label>
-              <select
-                class="form-select"
-                id="sector"
-                required
-                name={"sector"}
-                onChange={this.handleSectorInput}
-                value={this.state.sector}
-              >
-                <option selected disabled value="">
-                  Choose...
-                </option>
-                {this.renderSectorList()}
-              </select>
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-6`}>
-              <label for={"boardOfDirectors"} class="form-label">
-                {COMPANY_JSON_FIELD["boardOfDirectors"]}
+              <label for={"remarks"} class="form-label">
+                {EXCHANGE_JSON_FIELD["remarks"]}
               </label>
               <input
                 type="text"
                 class="form-control"
-                id={"boardOfDirectors"}
-                value={this.state.data["boardOfDirectors"]}
-                name={"boardOfDirectors"}
+                id={"remarks"}
+                value={this.state.data["remarks"]}
+                name={"remarks"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -258,15 +202,15 @@ class AddNewCompany extends React.Component {
             </div>
 
             <div class={`col-md-12`}>
-              <label for={"companyBrief"} class="form-label">
-                {COMPANY_JSON_FIELD["companyBrief"]}
+              <label for={"brief"} class="form-label">
+                {EXCHANGE_JSON_FIELD["brief"]}
               </label>
               <input
                 type="text"
                 class="form-control"
-                id={"companyBrief"}
-                value={this.state.data["companyBrief"]}
-                name={"companyBrief"}
+                id={"brief"}
+                value={this.state.data["brief"]}
+                name={"brief"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -296,4 +240,4 @@ class AddNewCompany extends React.Component {
   }
 }
 
-export default AddNewCompany;
+export default UpdateCompany;

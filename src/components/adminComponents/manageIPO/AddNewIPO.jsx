@@ -1,21 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { COMPANY_JSON_FIELD } from "../../../globals/configs";
+import { IPO_JSON_FIELD } from "../../../globals/configs";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
-class AddNewCompany extends React.Component {
+class AddNewIPO extends React.Component {
   state = {
     data: {
-      companyName: "",
-      ceo: "",
-      turnover: null,
-
-      boardOfDirectors: "",
-      companyBrief: "",
+      pricePerShare: null,
+      totalNumberOfShares: null,
+      openDateTime: null,
+      remarks: "",
     },
-    sector: "",
-    sectorList: [],
+    company: "",
+    companyList: [],
     displayMessage: false,
     messageUI: null,
   };
@@ -23,16 +21,12 @@ class AddNewCompany extends React.Component {
   clearForm = () => {
     this.setState({
       data: {
-        companyName: "",
-        ceo: "",
-        turnover: null,
-
-        boardOfDirectors: "",
-        companyBrief: "",
+        pricePerShares: null,
+        totalNumberOfShares: null,
+        openDateTime: null,
+        remarks: "",
       },
-      sector: "",
-      companyName: "",
-      // sectorList: [],
+      company: "",
       displayMessage: false,
       messageUI: null,
     });
@@ -47,10 +41,14 @@ class AddNewCompany extends React.Component {
   };
 
   componentDidMount = async () => {
-    const sectorResponse = await API.get("/sectors/list");
+    const companyResponse = await API.get("/company/list");
+    console.log("OKKK");
+    console.log(companyResponse);
+    const companyList = companyResponse.data.map((o) => {
+      return o.companyName;
+    });
 
-    const sectorList = sectorResponse.data;
-    this.setState({ sectorList });
+    this.setState({ companyList });
   };
 
   handleFormInput = (e) => {
@@ -59,8 +57,8 @@ class AddNewCompany extends React.Component {
     this.setState({ data });
   };
 
-  handleSectorInput = (e) => {
-    this.setState({ sector: e.target.value });
+  handleCompanyInput = (e) => {
+    this.setState({ company: e.target.value });
   };
 
   handleResponse = (response) => {
@@ -85,16 +83,16 @@ class AddNewCompany extends React.Component {
     e.preventDefault();
     const data = this.state.data;
 
-    if (this.state.sector == "") {
+    if (this.state.company == "") {
       this.setState({
-        messageUI: RenderMessage(400, "Sector Cannot be empty!"),
+        messageUI: RenderMessage(400, "Company Cannot be empty!"),
         displayMessage: true,
       });
     } else {
       let response;
       try {
         response = await API.post(
-          `/company/new/${this.state.sector}`,
+          `/ipo/new/${this.state.company}`,
           this.state.data
         );
         this.handleResponse(response);
@@ -140,26 +138,24 @@ class AddNewCompany extends React.Component {
     else return 4;
   };
 
-  renderSectorList = () => {
-    return this.state.sectorList.map((el) => {
-      return <option>{el.sectorName}</option>;
+  renderCompanyList = () => {
+    return this.state.companyList.map((el) => {
+      return <option>{el}</option>;
     });
   };
 
   render() {
     console.log("HELLO");
-    console.log(this.props);
+    // console.log(this.props);
     console.log(this.state);
     // console.log(Object.keys(this.state.data).map((el) => el));
     return (
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
-          <h4 style={{ display: "flex", alignItems: "center" }}>
-            Add New Company
-          </h4>
+          <h4 style={{ display: "flex", alignItems: "center" }}>Add New IPO</h4>
           <div class="d-flex">
             <Link
-              to="/admin/company/list"
+              to="/admin/ipo/list"
               type="button"
               class="btn btn-outline-secondary btn-sm ms-3 md-3"
               style={{ display: "flex", alignItems: "center" }}
@@ -174,47 +170,47 @@ class AddNewCompany extends React.Component {
 
           <form class="row g-3 needs-validation" noValidate>
             <div class={`col-md-4`}>
-              <label for={"companyName"} class="form-label">
-                {COMPANY_JSON_FIELD["companyName"]}
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id={"companyName"}
-                value={this.state.data["companyName"]}
-                name={"companyName"}
-                onChange={this.handleFormInput}
-                required
-              />
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-4`}>
-              <label for={"ceo"} class="form-label">
-                {COMPANY_JSON_FIELD["ceo"]}
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id={"ceo"}
-                value={this.state.data["ceo"]}
-                name={"ceo"}
-                onChange={this.handleFormInput}
-                required
-              />
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-4`}>
-              <label for={"turnover"} class="form-label">
-                {COMPANY_JSON_FIELD["turnover"]}
+              <label for={"pricePerShare"} class="form-label">
+                {IPO_JSON_FIELD["pricePerShare"]}
               </label>
               <input
                 type="number"
                 class="form-control"
-                id={"turnover"}
-                value={this.state.data["turnover"]}
-                name={"turnover"}
+                id={"pricePerShare"}
+                value={this.state.data["pricePerShare"]}
+                name={"pricePerShare"}
+                onChange={this.handleFormInput}
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class={`col-md-4`}>
+              <label for={"totalNumberOfShares"} class="form-label">
+                {IPO_JSON_FIELD["totalNumberOfShares"]}
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                id={"totalNumberOfShares"}
+                value={this.state.data["totalNumberOfShares"]}
+                name={"totalNumberOfShares"}
+                onChange={this.handleFormInput}
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class={`col-md-4`}>
+              <label for={"openDateTime"} class="form-label">
+                {IPO_JSON_FIELD["openDateTime"]}
+              </label>
+              <input
+                type="date"
+                class="form-control"
+                id={"openDateTime"}
+                value={this.state.data["openDateTime"]}
+                name={"openDateTime"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -222,51 +218,35 @@ class AddNewCompany extends React.Component {
             </div>
 
             <div class={`col-md-6`}>
-              <label for={"sector"} class="form-label">
-                {COMPANY_JSON_FIELD["sector"]}
+              <label for={"company"} class="form-label">
+                {IPO_JSON_FIELD["company"]}
               </label>
               <select
                 class="form-select"
-                id="sector"
+                id="company"
                 required
-                name={"sector"}
-                onChange={this.handleSectorInput}
-                value={this.state.sector}
+                name={"company"}
+                onChange={this.handleCompanyInput}
+                value={this.state.company}
               >
                 <option selected disabled value="">
                   Choose...
                 </option>
-                {this.renderSectorList()}
+                {this.renderCompanyList()}
               </select>
               <div class="valid-feedback">Looks good!</div>
             </div>
 
             <div class={`col-md-6`}>
-              <label for={"boardOfDirectors"} class="form-label">
-                {COMPANY_JSON_FIELD["boardOfDirectors"]}
+              <label for={"remarks"} class="form-label">
+                {IPO_JSON_FIELD["remarks"]}
               </label>
               <input
                 type="text"
                 class="form-control"
-                id={"boardOfDirectors"}
-                value={this.state.data["boardOfDirectors"]}
-                name={"boardOfDirectors"}
-                onChange={this.handleFormInput}
-                required
-              />
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-12`}>
-              <label for={"companyBrief"} class="form-label">
-                {COMPANY_JSON_FIELD["companyBrief"]}
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id={"companyBrief"}
-                value={this.state.data["companyBrief"]}
-                name={"companyBrief"}
+                id={"remarks"}
+                value={this.state.data["remarks"]}
+                name={"remarks"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -296,4 +276,4 @@ class AddNewCompany extends React.Component {
   }
 }
 
-export default AddNewCompany;
+export default AddNewIPO;

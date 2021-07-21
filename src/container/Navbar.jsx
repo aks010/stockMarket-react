@@ -65,14 +65,14 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/admin/ipo/update"
+              to="/admin/ipo/list"
               isActive={(match, location) => {
                 if (!match) {
                   return false;
                 }
               }}
             >
-              Update IPO Details
+              IPO Details
             </NavLink>
           </li>
         </ul>
