@@ -37,7 +37,7 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/admin/manage/company"
+              to="/admin/company/list"
               isActive={(match, location) => {
                 if (!match) {
                   return false;
@@ -51,7 +51,7 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/admin/manage/exchange"
+              to="/admin/exchange/list"
               isActive={(match, location) => {
                 if (!match) {
                   return false;
@@ -189,7 +189,7 @@ class Navbar extends React.Component {
                 {this.props.userRole == null ? (
                   <button class="btn btn-outline-success" type="submit">
                     {" "}
-                    "Login"
+                    Login
                   </button>
                 ) : (
                   <button

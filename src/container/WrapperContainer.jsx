@@ -16,13 +16,14 @@ class WrapperContainer extends React.Component {
 
   componentDidMount() {
     // fetch userRole
-    const userRole = "user";
+    const userRole = "admin";
     // set userRole
     SetUserRole(userRole);
     this.setState({ userRole: GetUserRole() });
   }
 
   handleLogout = () => {
+    console.log("Logging out");
     SetUserRole(null);
     this.setState({ userRole: GetUserRole() });
   };
@@ -32,12 +33,15 @@ class WrapperContainer extends React.Component {
     console.log(this.state.userRole == USER || this.state.userRole == ADMIN);
     return (
       <div>
-        <Navbar userRole={this.state.userRole} />
+        <Navbar
+          userRole={this.state.userRole}
+          handleLogout={this.handleLogout}
+        />
         <div className="container">
           <Switch>
             <Route path="/admin">
               {this.state.userRole == ADMIN ? (
-                <AdminWrapperContainer handleLogout={this.handleLogout} />
+                <AdminWrapperContainer />
               ) : (
                 <div>Unauthorized</div>
               )}
@@ -47,7 +51,7 @@ class WrapperContainer extends React.Component {
             </Route>
             <Route path="/user">
               {this.state.userRole == USER || this.state.userRole == ADMIN ? (
-                <UserWrapperContainer handleLogout={this.handleLogout} />
+                <UserWrapperContainer />
               ) : (
                 //todo
                 <div>Redirect to login</div>
