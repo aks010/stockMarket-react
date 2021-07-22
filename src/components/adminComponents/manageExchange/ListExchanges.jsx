@@ -62,12 +62,6 @@ class ListExchanges extends React.Component {
             >
               Add New Stock Exchange
             </Link>
-            <button
-              type="button"
-              class="btn btn-outline-secondary btn-sm ms-3 md-3"
-            >
-              Back
-            </button>
           </div>
         </div>
 

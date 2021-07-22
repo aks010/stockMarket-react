@@ -1,36 +1,22 @@
 import React from "react";
 
-import { EXCHANGE_JSON_FIELD } from "../../../globals/configs";
+import { IPO_JSON_FIELD } from "../../../globals/configs";
 
 import { Link } from "react-router-dom";
-import API2 from "../../../Api2";
-import API1 from "../../../Api";
+import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
-class UpdateCompany extends React.Component {
+class UpdateIPO extends React.Component {
   state = {
     data: {
-      exchangeName: "",
-      contactAddress: "",
+      pricePerShare: null,
+      totalNumberOfShares: null,
+      openDateTime: null,
       remarks: "",
-      brief: "",
     },
-    currExchange: "",
+    company: "",
     displayMessage: false,
     messageUI: null,
-  };
-
-  clearForm = () => {
-    this.setState({
-      data: {
-        exchangeName: "",
-        contactAddress: "",
-        remarks: "",
-        brief: "",
-      },
-      displayMessage: false,
-      messageUI: null,
-    });
   };
 
   closeDisplayMessage = () => {
@@ -43,16 +29,15 @@ class UpdateCompany extends React.Component {
 
   componentDidMount = async () => {
     let pathSplit = window.location.pathname.split("/");
-    const currExchange = pathSplit[pathSplit.length - 1];
-    console.log(currExchange);
+    const companyName = pathSplit[pathSplit.length - 1];
+    console.log(companyName);
 
-    const response = await API2.get(`/stockExchange/${currExchange}`);
+    const response = await API.get(`/ipo/${companyName}`);
     console.log(response.data);
     const data = {};
     Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
-    console.log(data);
 
-    this.setState({ data, currExchange });
+    this.setState({ data, company: companyName });
   };
 
   handleFormInput = (e) => {
@@ -65,7 +50,7 @@ class UpdateCompany extends React.Component {
     if (response.status == 201 || response.status == 200) {
       const messageUI = RenderMessage(
         201,
-        "Successfully Updated Company!!",
+        "Successfully Updated IPO!!",
         this.closeDisplayMessage
       );
       this.setState({ messageUI, displayMessage: true });
@@ -87,22 +72,32 @@ class UpdateCompany extends React.Component {
 
     let response;
     try {
-      response = await API2.put(
-        `/stockExchange/update/${this.state.currExchange}`,
-        this.state.data
-      );
-      await API1.put(
-        `/stockExchange/update/${this.state.currExchange}`,
-        this.state.data
-      );
+      response = await API.put(`/ipo/update/${this.state.company}`, {
+        ...this.state.data,
+      });
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");
       console.log(e.response);
-      this.handleResponse(e.response);
+      if (e.response) this.handleResponse(e.response);
+      else
+        this.handleResponse({
+          status: null,
+          data: { message: "Unable to Connect to Server" },
+        });
     }
 
     console.log(response);
+  };
+
+  renderSectorList = () => {
+    return this.state.sectorList.map((el) => {
+      return <option>{el.sectorName}</option>;
+    });
+  };
+
+  handleSector = (e) => {
+    this.setState({ sector: e.target.value });
   };
 
   validateFormInput = () => {
@@ -135,7 +130,7 @@ class UpdateCompany extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            Update Company
+            Update IPO Details
           </h4>
           <div class="d-flex">
             <Link
@@ -154,15 +149,15 @@ class UpdateCompany extends React.Component {
 
           <form class="row g-3 needs-validation" noValidate>
             <div class={`col-md-4`}>
-              <label for={"exchangeName"} class="form-label">
-                {EXCHANGE_JSON_FIELD["exchangeName"]}
+              <label for={"pricePerShare"} class="form-label">
+                {IPO_JSON_FIELD["pricePerShare"]}
               </label>
               <input
-                type="text"
+                type="number"
                 class="form-control"
-                id={"exchangeName"}
-                value={this.state.data["exchangeName"]}
-                name={"exchangeName"}
+                id={"pricePerShare"}
+                value={this.state.data["pricePerShare"]}
+                name={"pricePerShare"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -170,15 +165,15 @@ class UpdateCompany extends React.Component {
             </div>
 
             <div class={`col-md-4`}>
-              <label for={"contactAddress"} class="form-label">
-                {EXCHANGE_JSON_FIELD["contactAddress"]}
+              <label for={"totalNumberOfShares"} class="form-label">
+                {IPO_JSON_FIELD["totalNumberOfShares"]}
               </label>
               <input
-                type="text"
+                type="number"
                 class="form-control"
-                id={"contactAddress"}
-                value={this.state.data["contactAddress"]}
-                name={"contactAddress"}
+                id={"totalNumberOfShares"}
+                value={this.state.data["totalNumberOfShares"]}
+                name={"totalNumberOfShares"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -186,8 +181,43 @@ class UpdateCompany extends React.Component {
             </div>
 
             <div class={`col-md-4`}>
+              <label for={"openDateTime"} class="form-label">
+                {IPO_JSON_FIELD["openDateTime"]}
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                id={"openDateTime"}
+                value={this.state.data["openDateTime"]}
+                name={"openDateTime"}
+                placeholder="DD/MM/YYYY HH:MM:SS"
+                onChange={this.handleFormInput}
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class={`col-md-6`}>
+              <label for={"company"} class="form-label">
+                {IPO_JSON_FIELD["company"]}
+              </label>
+              <select
+                class="form-select"
+                disabled
+                id="company"
+                required
+                name={"company"}
+                onChange={this.handleCompanyInput}
+                value={this.state.company}
+              >
+                <option>{this.state.company}</option>
+              </select>
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class={`col-md-6`}>
               <label for={"remarks"} class="form-label">
-                {EXCHANGE_JSON_FIELD["remarks"]}
+                {IPO_JSON_FIELD["remarks"]}
               </label>
               <input
                 type="text"
@@ -195,22 +225,6 @@ class UpdateCompany extends React.Component {
                 id={"remarks"}
                 value={this.state.data["remarks"]}
                 name={"remarks"}
-                onChange={this.handleFormInput}
-                required
-              />
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-12`}>
-              <label for={"brief"} class="form-label">
-                {EXCHANGE_JSON_FIELD["brief"]}
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id={"brief"}
-                value={this.state.data["brief"]}
-                name={"brief"}
                 onChange={this.handleFormInput}
                 required
               />
@@ -240,4 +254,4 @@ class UpdateCompany extends React.Component {
   }
 }
 
-export default UpdateCompany;
+export default UpdateIPO;

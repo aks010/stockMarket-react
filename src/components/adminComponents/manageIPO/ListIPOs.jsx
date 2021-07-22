@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 // import API2 from "../../../Api2";
-import API1 from "../../../Api2";
+import API1 from "../../../Api";
 
 class ListIPOs extends React.Component {
   state = {
@@ -17,15 +17,18 @@ class ListIPOs extends React.Component {
 
   renderList = () => {
     console.log(this.state);
+
     return this.state.ipoList.map((ipo) => {
+      let localDate = new Date(ipo.openDateTime);
+      let show = localDate.toLocaleString();
       return (
         <div class="row mt-3 p-3 bg-light">
-          <div class=" col col-sm-2 m-3">{ipo.pricePerShares}</div>
+          <div class=" col col-sm-2 m-3">{ipo.pricePerShare}</div>
           <div class="col col-sm-2 m-3">{ipo.totalNumberOfShares}</div>
-          <div class="col col-sm-3 m-3">{ipo.openDateTime}</div>
+          <div class="col col-sm-3 m-3">{show}</div>
           <div class="col col-sm-3 m-3">{ipo.remarks}</div>
           <Link
-            to={`/admin/ipo/update/${ipo.exchangeName}`}
+            to={`/admin/ipo/update/${ipo.company.companyName}`}
             class="col col-sm m-3 btn btn-outline-success btn-sm align-self-center"
           >
             Edit
@@ -53,12 +56,6 @@ class ListIPOs extends React.Component {
             >
               Add New IPO
             </Link>
-            <button
-              type="button"
-              class="btn btn-outline-secondary btn-sm ms-3 md-3"
-            >
-              Back
-            </button>
           </div>
         </div>
 

@@ -135,7 +135,7 @@ class UpdateCompany extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            Update Company
+            Update Exchange
           </h4>
           <div class="d-flex">
             <Link

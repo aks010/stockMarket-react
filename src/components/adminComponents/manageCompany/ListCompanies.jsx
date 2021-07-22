@@ -63,12 +63,6 @@ class ListAllCompanies extends React.Component {
             >
               Add New Company
             </Link>
-            <button
-              type="button"
-              class="btn btn-outline-secondary btn-sm ms-3 md-3"
-            >
-              Back
-            </button>
           </div>
         </div>
 

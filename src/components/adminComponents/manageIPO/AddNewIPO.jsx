@@ -19,11 +19,12 @@ class AddNewIPO extends React.Component {
   };
 
   clearForm = () => {
+    console.log("CLICKED");
     this.setState({
       data: {
-        pricePerShares: null,
-        totalNumberOfShares: null,
-        openDateTime: null,
+        pricePerShare: "",
+        totalNumberOfShares: "",
+        openDateTime: "",
         remarks: "",
       },
       company: "",
@@ -48,6 +49,8 @@ class AddNewIPO extends React.Component {
       return o.companyName;
     });
 
+    companyList.sort();
+
     this.setState({ companyList });
   };
 
@@ -62,21 +65,21 @@ class AddNewIPO extends React.Component {
   };
 
   handleResponse = (response) => {
+    let messageUI = null;
     if (response.status == 201) {
-      const messageUI = RenderMessage(
+      messageUI = RenderMessage(
         201,
         "Successfully Created Company!!",
         this.closeDisplayMessage
       );
-      this.setState({ messageUI, displayMessage: true });
     } else {
-      const messageUI = RenderMessage(
+      messageUI = RenderMessage(
         response.status,
         response.data.message,
         this.closeDisplayMessage
       );
-      this.setState({ messageUI, displayMessage: true });
     }
+    this.setState({ messageUI, displayMessage: true });
   };
 
   handleFormSubmit = async (e) => {
@@ -85,16 +88,20 @@ class AddNewIPO extends React.Component {
 
     if (this.state.company == "") {
       this.setState({
-        messageUI: RenderMessage(400, "Company Cannot be empty!"),
+        messageUI: RenderMessage(
+          400,
+          "Company Cannot be empty!",
+          this.closeDisplayMessage
+        ),
         displayMessage: true,
       });
     } else {
       let response;
       try {
-        response = await API.post(
-          `/ipo/new/${this.state.company}`,
-          this.state.data
-        );
+        response = await API.post(`/ipo/new/${this.state.company}`, {
+          ...this.state.data,
+          openDateTime: new Date(this.state.data.openDateTime),
+        });
         this.handleResponse(response);
       } catch (e) {
         console.log("Error");
@@ -147,7 +154,7 @@ class AddNewIPO extends React.Component {
   render() {
     console.log("HELLO");
     // console.log(this.props);
-    console.log(this.state);
+    console.log(this.state.data);
     // console.log(Object.keys(this.state.data).map((el) => el));
     return (
       <div>
@@ -206,11 +213,12 @@ class AddNewIPO extends React.Component {
                 {IPO_JSON_FIELD["openDateTime"]}
               </label>
               <input
-                type="date"
+                type="text"
                 class="form-control"
                 id={"openDateTime"}
                 value={this.state.data["openDateTime"]}
                 name={"openDateTime"}
+                placeholder="DD/MM/YYYY HH:MM:SS"
                 onChange={this.handleFormInput}
                 required
               />

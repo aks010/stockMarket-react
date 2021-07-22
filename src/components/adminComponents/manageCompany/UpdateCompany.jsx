@@ -3,7 +3,7 @@ import React from "react";
 import { COMPANY_JSON_FIELD } from "../../../globals/configs";
 
 import { Link } from "react-router-dom";
-import API from "../../../Api2";
+import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
 class UpdateCompany extends React.Component {

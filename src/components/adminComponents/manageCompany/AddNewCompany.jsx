@@ -87,7 +87,11 @@ class AddNewCompany extends React.Component {
 
     if (this.state.sector == "") {
       this.setState({
-        messageUI: RenderMessage(400, "Sector Cannot be empty!"),
+        messageUI: RenderMessage(
+          400,
+          "Sector Cannot be empty!",
+          this.closeDisplayMessage
+        ),
         displayMessage: true,
       });
     } else {
