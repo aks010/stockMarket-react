@@ -19,8 +19,7 @@ class UserWrapperContainer extends React.Component {
 
   render() {
     return (
-      <div>
-        USER
+      <div class="mt-5">
         <Switch>
           <Route path={`/user/compare/company`}>
             <CompareCompany />

@@ -2,6 +2,7 @@ import React from "react";
 import AddNewExchange from "./AddNewExchange";
 import ListExchanges from "./ListExchanges";
 import UpdateExchange from "./UpdateExchange";
+import CompanyExchangeMap from "./CompanyExchangeMap";
 import { Switch, Route } from "react-router-dom";
 
 class ManageCompany extends React.Component {
@@ -14,6 +15,9 @@ class ManageCompany extends React.Component {
         <Switch>
           <Route path={`${currPath}/new`}>
             <AddNewExchange />
+          </Route>
+          <Route path={`${currPath}/map`}>
+            <CompanyExchangeMap />
           </Route>
           <Route path={`${currPath}/update/:exchangeName`}>
             <UpdateExchange />

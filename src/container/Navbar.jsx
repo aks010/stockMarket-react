@@ -87,6 +87,20 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
+              to="/user/ipos"
+              isActive={(match, location) => {
+                if (!match) {
+                  return false;
+                }
+              }}
+            >
+              IPOs
+            </NavLink>
+          </li>
+          <li class="nav-item">
+            <NavLink
+              class="nav-link"
+              aria-current="page"
               to="/user/compare/company"
               isActive={(match, location) => {
                 if (!match) {
@@ -111,20 +125,7 @@ class Navbar extends React.Component {
               Compare Sectors
             </NavLink>
           </li>
-          <li class="nav-item">
-            <NavLink
-              class="nav-link"
-              aria-current="page"
-              to="/user/ipos"
-              isActive={(match, location) => {
-                if (!match) {
-                  return false;
-                }
-              }}
-            >
-              IPOs
-            </NavLink>
-          </li>
+
           <li class="nav-item">
             <NavLink
               class="nav-link"

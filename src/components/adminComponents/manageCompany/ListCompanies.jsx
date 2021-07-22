@@ -39,15 +39,9 @@ class ListAllCompanies extends React.Component {
         </div>
       );
     });
-    // console.log("Print");
-    // console.log(ui);
-
-    return <div>Hello</div>;
   };
 
   render() {
-    console.log(this.renderList());
-
     return (
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
@@ -68,7 +62,6 @@ class ListAllCompanies extends React.Component {
 
         <div class="container mt-5 d-flex justify-content-between">
           <div>COMPANIES</div>
-
           <div>
             <div class="input-group input-group-sm mb-3">
               <span class="input-group-text" id="inputGroup-sizing-sm">
@@ -85,27 +78,7 @@ class ListAllCompanies extends React.Component {
           </div>
         </div>
 
-        <div class="mt-3 .bg-light">
-          {this.renderList()}
-          {/* <div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-          </div> */}
-        </div>
+        <div class="mt-3 .bg-light">{this.renderList()}</div>
       </div>
     );
   }

@@ -56,6 +56,14 @@ class ListExchanges extends React.Component {
           <div class="d-flex">
             <Link
               type="button"
+              to="/admin/exchange/map"
+              class="btn btn-outline-success btn-sm ms-3 md-3 "
+              style={{ display: "flex", alignItems: "center" }}
+            >
+              Add Company To Exchange
+            </Link>
+            <Link
+              type="button"
               to="/admin/exchange/new"
               class="btn btn-outline-success btn-sm ms-3 md-3 "
               style={{ display: "flex", alignItems: "center" }}
@@ -64,47 +72,7 @@ class ListExchanges extends React.Component {
             </Link>
           </div>
         </div>
-
-        {/* <div class="container mt-5 d-flex justify-content-between">
-          <div>Stock Exchanges</div>
-
-          <div>
-            <div class="input-group input-group-sm mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-sm">
-                Filter
-              </span>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter Company Name"
-                aria-label="queryCompany"
-                aria-describedby="inputGroup-sizing-sm"
-              />
-            </div>
-          </div>
-        </div> */}
-
-        <div class="mt-3 .bg-light">
-          {this.renderList()}
-          {/* <div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-          </div> */}
-        </div>
+        <div class="mt-3 .bg-light">{this.renderList()}</div>
       </div>
     );
   }

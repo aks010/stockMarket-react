@@ -15,7 +15,7 @@ export function SetUserRole(role) {
 export const EXCEL_MAPPER = {
   "Company Code": "companyCode",
   "Stock Exchange": "exchangeName",
-  "Price Per Share(in Rs)": "pricePerShare",
+  "Price Per Share(in Rs)": "sharePrice",
   ["Date"]: "datee",
   ["Time"]: "timee",
 };

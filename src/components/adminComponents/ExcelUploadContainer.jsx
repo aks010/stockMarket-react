@@ -8,6 +8,7 @@
 import React from "react";
 import XLSX from "xlsx";
 import { EXCEL_MAPPER } from "../../globals/configs";
+import API from "../../Api";
 
 export default class SheetJSApp extends React.Component {
   constructor(props) {
@@ -65,16 +66,25 @@ export default class SheetJSApp extends React.Component {
     if (rABS) reader.readAsBinaryString(file);
     else reader.readAsArrayBuffer(file);
   }
-  exportFile() {
+  exportFile = async () => {
     /* convert state to workbook */
     const ws = XLSX.utils.aoa_to_sheet(this.state.data);
     console.log("EXPORTING PARSED DATA");
     console.log(this.state.parsedData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-    /* generate XLSX file and send to client */
-    XLSX.writeFile(wb, "sheetjs.xlsx");
-  }
+
+    const response = await API.post(
+      "/stockPrices/uploadExcel",
+      this.state.parsedData
+    );
+    console.log("GOT RESPONSE");
+
+    console.log(response);
+
+    // const wb = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+    // /* generate XLSX file and send to client */
+    // XLSX.writeFile(wb, "sheetjs.xlsx");
+  };
   render() {
     return (
       <DragDropFile handleFile={this.handleFile}>
