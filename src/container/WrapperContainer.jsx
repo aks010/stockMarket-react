@@ -7,6 +7,7 @@ import AdminWrapperContainer from "./AdminWrapperContainer";
 import UserWrapperContainer from "./UserWrapperContainer";
 import LoginComponent from "../components/LoginComponent";
 import { SetUserRole, GetUserRole, ADMIN, USER } from "../globals/configs";
+import CreateAccount from "../components/CreateAccount";
 
 class WrapperContainer extends React.Component {
   state = {
@@ -15,17 +16,13 @@ class WrapperContainer extends React.Component {
   };
 
   componentDidMount() {
-    // fetch userRole
-    const userRole = "admin";
-    // set userRole
-    SetUserRole(userRole);
     this.setState({ userRole: GetUserRole() });
   }
 
   handleLogout = () => {
     console.log("Logging out");
-    SetUserRole(null);
-    this.setState({ userRole: GetUserRole() });
+    window.localStorage.removeItem("role");
+    window.location.href = "/login";
   };
 
   render() {
@@ -48,6 +45,9 @@ class WrapperContainer extends React.Component {
             </Route>
             <Route path="/login">
               <LoginComponent />
+            </Route>
+            <Route path="/signup">
+              <CreateAccount />
             </Route>
             <Route path="/user">
               {this.state.userRole == USER || this.state.userRole == ADMIN ? (

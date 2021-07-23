@@ -33,7 +33,9 @@ class UserWrapperContainer extends React.Component {
           <Route path={`/user/others`}>
             <Other />
           </Route>
-          <Router path="/user">{/* <UserWrapperContainer /> */}</Router>
+          <Route path={`/user/`}>
+            <IPOs />
+          </Route>
         </Switch>
       </div>
     );

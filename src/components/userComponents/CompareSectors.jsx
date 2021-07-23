@@ -1,23 +1,18 @@
 import React from "react";
 
+import ComparisionChart from "./ComparisionChart";
+
 class CompareSectors extends React.Component {
   render() {
     return (
       <div>
-        <div class="d-flex" style={{ justifyContent: "space-between" }}>
-          <h4 style={{ display: "flex", alignItems: "center" }}>
-            Compare Sectors
-          </h4>
-          {/* <div class="d-flex">
-            <Link
-              type="button"
-              to="/admin/exchange/new"
-              class="btn btn-outline-success btn-sm ms-3 md-3 "
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              Add New Stock Exchange
-            </Link>
-          </div> */}
+        <div class="h4" style={{ display: "flex", alignItems: "center" }}>
+          Compare Sectors
+        </div>
+
+        <div class="container mt-5">
+          {" "}
+          <ComparisionChart />
         </div>
       </div>
     );

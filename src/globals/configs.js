@@ -1,15 +1,18 @@
 let USER_ROLE = null;
-export const ADMIN = "ADMIN";
-export const USER = "USER";
+export const ADMIN = "admin";
+export const USER = "user";
 
 export function GetUserRole() {
-  return USER_ROLE;
+  return window.localStorage.getItem("role") == undefined
+    ? null
+    : window.localStorage.getItem("role");
 }
 
 export function SetUserRole(role) {
   if (role == "admin") USER_ROLE = ADMIN;
   else if (role == "user") USER_ROLE = USER;
-  else USER_ROLE = null;
+  else window.localStorage.removeItem("role");
+  window.localStorage.setItem("role", USER_ROLE);
 }
 
 export const EXCEL_MAPPER = {
@@ -59,4 +62,18 @@ export const IPO_JSON_FIELD = {
   openDateTime: OPEN_DATA_TIME,
   remarks: IPO_REMARKS,
   company: "Company",
+};
+
+const USER_NAME = "User Name";
+const PASSWORD = "Password";
+const ROLE = "Role";
+const EMAIL = "Email";
+const MOBILE = "Mobile";
+
+export const USER_JSON_FIELD = {
+  username: USER_NAME,
+  password: PASSWORD,
+  role: ROLE,
+  email: EMAIL,
+  mobile: MOBILE,
 };

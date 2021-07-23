@@ -146,6 +146,9 @@ class Navbar extends React.Component {
   };
 
   render() {
+    console.log(this.props.userRole);
+    console.log(this.props.userRole == null);
+
     return (
       <div>
         {/* {this.renderUI()} */}
@@ -178,20 +181,24 @@ class Navbar extends React.Component {
               </div>
               <div class=" navbar-nav d-flex nav-item">
                 {this.props.userRole == null && (
-                  <button
+                  <Link
+                    to="/signup"
                     class="btn btn-success me-3"
                     type="submit"
                     style={{ width: "max-content" }}
                   >
                     Create Account
-                  </button>
+                  </Link>
                 )}
 
                 {this.props.userRole == null ? (
-                  <button class="btn btn-outline-success" type="submit">
-                    {" "}
+                  <Link
+                    to="/login"
+                    class="btn btn-outline-success"
+                    type="submit"
+                  >
                     Login
-                  </button>
+                  </Link>
                 ) : (
                   <button
                     class="btn btn-outline-primary"

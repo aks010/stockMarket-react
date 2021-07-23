@@ -33,7 +33,9 @@ class AdminWrapperContainer extends React.Component {
           <Route path={`/admin/ipo`}>
             <ManageIPO />
           </Route>
-          <Router path="/user">{/* <UserWrapperContainer /> */}</Router>
+          <Route path={`/admin`}>
+            <ImportData />
+          </Route>
         </Switch>
       </div>
     );
