@@ -7,14 +7,6 @@ import axios from "axios";
 import ComparisionForm from "./ComparisionForm";
 ReactFC.fcRoot(FusionCharts, TimeSeries);
 
-const jsonify = (res) => res.json();
-const dataFetch = fetch(
-  "http://localhost:8081/stockPrices/compare/company"
-).then(jsonify);
-const schemaFetch = fetch(
-  "https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/plotting-multiple-series-on-time-axis-schema.json"
-).then(jsonify);
-
 const dataSource = {
   chart: {},
   caption: {
@@ -38,7 +30,6 @@ const dataSource = {
 class ChartViewer extends React.Component {
   constructor(props) {
     super(props);
-    this.onFetchData = this.onFetchData.bind(this);
     this.state = {
       timeseriesDs: {
         type: "timeseries",
@@ -47,72 +38,58 @@ class ChartViewer extends React.Component {
         height: "400",
         dataSource,
       },
+      data: [],
     };
   }
 
-  componentDidMount() {
-    this.onFetchData();
-  }
+  componentDidUpdate = (prevProps) => {
+    // if (prevProps.data != newProps.data) {
+    //   this.setState({ data: newProps.data });
+    // }
 
-  async onFetchData() {
-    Promise.all([dataFetch, schemaFetch]);
-    const response = await API.post("/stockPrices/compare/company", {
-      from: "2001-03-21",
-      to: "2095-01-30",
-      companyList: ["C"],
-      sectorList: [],
-    });
-    console.log(response);
+    if (this.props.data != prevProps.data) {
+      console.log("DID UPDATE!!!!!!!!!!s");
+      const data = this.props.data;
+      const schema = [
+        {
+          name: "Time",
+          type: "date",
+          format: "%Y-%m-%d",
+        },
+        {
+          name: "Type",
+          type: "string",
+        },
+        {
+          name: "Sales Value",
+          type: "number",
+        },
+      ];
+      const fusionTable = new FusionCharts.DataStore().createDataTable(
+        data,
+        schema
+      );
+      const timeseriesDs = Object.assign({}, this.state.timeseriesDs);
+      console.log(timeseriesDs);
+      timeseriesDs.dataSource.data = fusionTable;
+      this.setState({
+        timeseriesDs,
+        data: data,
+      });
+    }
+  };
 
-    const data = response.data;
-    // const data = [
-    //   ["01-Feb-11", "Grocery", 8866],
-    //   ["01-Feb-11", "Footwear", 984],
-    //   ["02-Feb-11", "Grocery", 2174],
-    //   ["02-Feb-11", "Footwear", 1109],
-    //   ["03-Feb-11", "Grocery", 2084],
-    //   ["03-Feb-11", "Footwear", 6526],
-    //   ["04-Feb-11", "Grocery", 1503],
-    //   ["04-Feb-11", "Footwear", 1007],
-    // ];
-    // const data = [
-    //   ["2001-02-11", "A", 2125.3999938964844],
-    //   ["2001-03-11", "B", 699.6799926757812],
-    //   ["2001-04-11", "A", 3610.30999755859375],
-    //   ["2001-04-11", "B", 3186.3899841308594],
-    // ];
+  // loadData = () => {
+  //   const data = this.state.data;
 
-    console.log(data);
-    const schema = [
-      {
-        name: "Time",
-        type: "date",
-        format: "%Y-%m-%d",
-      },
-      {
-        name: "Type",
-        type: "string",
-      },
-      {
-        name: "Sales Value",
-        type: "number",
-      },
-    ];
-    const fusionTable = new FusionCharts.DataStore().createDataTable(
-      data,
-      schema
-    );
-    const timeseriesDs = Object.assign({}, this.state.timeseriesDs);
-    console.log(timeseriesDs);
-    timeseriesDs.dataSource.data = fusionTable;
-    this.setState({
-      timeseriesDs,
-    });
-  }
+  //   console.log(data);
+  // };
 
   render() {
+    console.log(this.state.data);
     return (
       <div>
+        {/* {this.loadData()} */}
         {this.state.timeseriesDs.dataSource.data ? (
           <ReactFC {...this.state.timeseriesDs} />
         ) : (

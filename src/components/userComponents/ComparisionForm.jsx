@@ -29,7 +29,7 @@ class CompanyExchangeMap extends React.Component {
     const key = this.props.formId;
     console.log(key);
     this.props.addData(key, data);
-    this.setState(data);
+    this.setState({ data });
   };
   handleTypeInput = async (e) => {
     const data = this.state.data;
@@ -53,7 +53,7 @@ class CompanyExchangeMap extends React.Component {
       this.setState({ exchangeList });
     }
     this.props.addData(key, data);
-    this.setState(data);
+    this.setState({ data });
   };
   handleExchangeInput = async (e) => {
     const data = this.state.data;
@@ -62,7 +62,7 @@ class CompanyExchangeMap extends React.Component {
     const key = this.props.formId;
 
     this.props.addData(key, data);
-    this.setState(data);
+    this.setState({ data });
 
     const response = await API.get(`/stockExchange/list/${exchangeName}`);
     const companyList = response.data.map((o) => {
@@ -104,6 +104,10 @@ class CompanyExchangeMap extends React.Component {
     return this.state.sectorList.map((el) => {
       return <option>{el}</option>;
     });
+  };
+
+  handleRemove = () => {
+    this.props.removeElement(this.props.formId);
   };
 
   render() {
@@ -175,7 +179,7 @@ class CompanyExchangeMap extends React.Component {
             class="btn btn-outline-danger"
             type="button"
             id="button-addon1"
-            onClick={this.props.handleRemove}
+            onClick={this.handleRemove}
           >
             X
           </button>
