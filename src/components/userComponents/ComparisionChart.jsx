@@ -4,7 +4,7 @@ import TimeSeries from "fusioncharts/fusioncharts.timeseries";
 import ReactFC from "react-fusioncharts";
 import API from "../../Api";
 import axios from "axios";
-
+import ComparisionForm from "./ComparisionForm";
 ReactFC.fcRoot(FusionCharts, TimeSeries);
 
 const jsonify = (res) => res.json();
@@ -43,7 +43,7 @@ class ChartViewer extends React.Component {
       timeseriesDs: {
         type: "timeseries",
         renderAt: "container",
-        width: "600",
+        width: "700",
         height: "400",
         dataSource,
       },

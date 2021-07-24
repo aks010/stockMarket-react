@@ -78,7 +78,7 @@ class LoginComponent extends React.Component {
   render() {
     return (
       <div class="d-flex container mt-5  justify-content-center">
-        <div class="container m-5 rounded border border-1 col-6 ">
+        <div class="container m-5  bg-light rounded border border-1 col-6 ">
           <form class="container ps-5 pe-5 mt-5 mb-5">
             <div class="mt-3">
               {this.state.displayMessage && this.state.messageUI}

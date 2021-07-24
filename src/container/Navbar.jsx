@@ -65,6 +65,20 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
+              to="/admin/exchange/list"
+              isActive={(match, location) => {
+                if (!match) {
+                  return false;
+                }
+              }}
+            >
+              Manage Sectors
+            </NavLink>
+          </li>
+          <li class="nav-item">
+            <NavLink
+              class="nav-link"
+              aria-current="page"
               to="/admin/ipo/list"
               isActive={(match, location) => {
                 if (!match) {
@@ -152,8 +166,8 @@ class Navbar extends React.Component {
     return (
       <div>
         {/* {this.renderUI()} */}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light p-3">
-          <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light p-3 ps-4 pd-4">
+          <div class="container-fluid">
             <a class="navbar-brand">
               <img
                 src="/logo-tab.png"

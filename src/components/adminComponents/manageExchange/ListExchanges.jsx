@@ -60,7 +60,7 @@ class ListExchanges extends React.Component {
               class="btn btn-outline-success btn-sm ms-3 md-3 "
               style={{ display: "flex", alignItems: "center" }}
             >
-              Add Company To Exchange
+              Map Company To Exchange
             </Link>
             <Link
               type="button"
