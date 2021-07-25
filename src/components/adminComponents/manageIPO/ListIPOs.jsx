@@ -23,21 +23,25 @@ class ListIPOs extends React.Component {
       let show = localDate.toLocaleString();
       return (
         <div class="row mt-3 p-3 bg-light">
-          <div class=" col col-sm-2 m-3">{ipo.pricePerShare}</div>
+          <div class="col col-sm-2 m-3">{ipo.pricePerShare}</div>
           <div class="col col-sm-2 m-3">{ipo.totalNumberOfShares}</div>
-          <div class="col col-sm-3 m-3">{show}</div>
-          <div class="col col-sm-3 m-3">{ipo.remarks}</div>
+          <div class="col col-sm-2 m-3">{show}</div>
+          <div class="col col-sm-2 m-3">{ipo.remarks}</div>
           <Link
             to={`/admin/ipo/update/${ipo.company.companyName}`}
-            class="col col-sm m-3 btn btn-outline-success btn-sm align-self-center"
+            class="col col-sm-1.5 m-3 btn btn-outline-success btn-sm align-self-center"
           >
             Edit
+          </Link>
+          <Link
+            to={`/admin/ipo/exchange/${ipo.company.companyName}`}
+            class="col col-sm-1.5 m-3 btn btn-outline-success btn-sm align-self-center"
+          >
+            Add Exchange
           </Link>
         </div>
       );
     });
-    // console.log("Print");
-    // console.log(ui);
   };
 
   render() {
@@ -59,45 +63,15 @@ class ListIPOs extends React.Component {
           </div>
         </div>
 
-        {/* <div class="container mt-5 d-flex justify-content-between">
-          <div>Stock Exchanges</div>
-
-          <div>
-            <div class="input-group input-group-sm mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-sm">
-                Filter
-              </span>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter Company Name"
-                aria-label="queryCompany"
-                aria-describedby="inputGroup-sizing-sm"
-              />
-            </div>
-          </div>
-        </div> */}
-
         <div class="mt-3 .bg-light">
+          <div class="row mt-5 p-3 ">
+            <div class="col col-sm-2 ms-3 me-3">PRICE PER SHARE</div>
+            <div class="col col-sm-2 ms-3 me-3">TOTAL SHARES</div>
+            <div class="col col-sm-2 ms-3 me-3">OPEN DATE TIME</div>
+            <div class="col col-sm-2 ms-3 ">REMARKS</div>
+            <div class="col col-sm-2.5 text-center">ACTIONS</div>
+          </div>
           {this.renderList()}
-          {/* <div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     );

@@ -77,3 +77,10 @@ export const USER_JSON_FIELD = {
   email: EMAIL,
   mobile: MOBILE,
 };
+
+const SECTOR_NAME = "Sector Name";
+
+export const SECTOR_JSON_FIELD = {
+  sectorName: SECTOR_NAME,
+  brief: BRIEF,
+};

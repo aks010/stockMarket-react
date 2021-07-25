@@ -25,7 +25,7 @@ class ListExchanges extends React.Component {
 
       return (
         <div class="row mt-3 p-3 bg-light">
-          <div class=" col col-sm-2 m-3">{exchange.exchangeName}</div>
+          <div class="col col-sm-2 m-3">{exchange.exchangeName}</div>
           <div class="col col-sm-2 m-3">{exchange.remarks}</div>
           <div class="col col-sm-3 m-3">{exchange.contactAddress}</div>
           <div class="col col-sm-3 m-3">{exchange.brief}</div>
@@ -72,7 +72,16 @@ class ListExchanges extends React.Component {
             </Link>
           </div>
         </div>
-        <div class="mt-3 .bg-light">{this.renderList()}</div>
+        <div class="mt-3 .bg-light">
+          <div class="row mt-5 p-3 ">
+            <div class="col col-sm-2 ms-3 me-3">EXCHANGE NAME</div>
+            <div class="col col-sm-2 ms-3 me-3">REMARKS</div>
+            <div class="col col-sm-3 ms-3 me-3">CONTACT ADDRESS</div>
+            <div class="col col-sm-2.5 ms-3 ">BRIEF</div>
+            <div class="col col-sm-1 ">ACTIONS</div>
+          </div>
+          {this.renderList()}
+        </div>
       </div>
     );
   }

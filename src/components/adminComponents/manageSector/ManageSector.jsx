@@ -1,29 +1,28 @@
 import React from "react";
-import AddNewIPO from "./AddNewIPO";
-import ListIPOs from "./ListIPOs";
-import UpdateIPO from "./UpdateIPO";
+import AddNewSector from "./AddNewSector";
+import ListSectors from "./ListSectors";
+import UpdateSector from "./UpdateSector";
 import { Switch, Route } from "react-router-dom";
-import IPOExchange from "./IPOExchange";
 
-class ManageIPO extends React.Component {
+class ManageCompany extends React.Component {
   render() {
     console.log("HELLP");
     console.log(this.props);
-    let currPath = "/admin/ipo";
+    let currPath = "/admin/sector";
     return (
       <div>
         <Switch>
           <Route path={`${currPath}/new`}>
-            <AddNewIPO />
+            <AddNewSector />
           </Route>
+          {/* <Route path={`${currPath}/map`}>
+            <CompanyExchangeMap />
+          </Route> */}
           <Route path={`${currPath}/update/:exchangeName`}>
-            <UpdateIPO />
+            <UpdateSector />
           </Route>
           <Route path={`${currPath}/list`}>
-            <ListIPOs />
-          </Route>
-          <Route path={`${currPath}/exchange/:companyName`}>
-            <IPOExchange />
+            <ListSectors />
           </Route>
         </Switch>
       </div>
@@ -31,4 +30,4 @@ class ManageIPO extends React.Component {
   }
 }
 
-export default ManageIPO;
+export default ManageCompany;

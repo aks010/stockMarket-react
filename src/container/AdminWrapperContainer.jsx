@@ -7,6 +7,8 @@ import ManageCompany from "../components/adminComponents/manageCompany/ManageCom
 import ManageExchange from "../components/adminComponents/manageExchange/ManageExchange";
 import ManageIPO from "../components/adminComponents/manageIPO/ManageIPO";
 
+import ManageSector from "../components/adminComponents/manageSector/ManageSector";
+
 class AdminWrapperContainer extends React.Component {
   state = {
     role: null,
@@ -32,6 +34,9 @@ class AdminWrapperContainer extends React.Component {
           </Route>
           <Route path={`/admin/ipo`}>
             <ManageIPO />
+          </Route>
+          <Route path={`/admin/sector`}>
+            <ManageSector />
           </Route>
           <Route path={`/admin`}>
             <ImportData />

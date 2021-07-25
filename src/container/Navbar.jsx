@@ -65,7 +65,7 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/admin/exchange/list"
+              to="/admin/sector/list"
               isActive={(match, location) => {
                 if (!match) {
                   return false;

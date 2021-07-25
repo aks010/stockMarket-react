@@ -139,12 +139,6 @@ class AddNewIPO extends React.Component {
     });
   };
 
-  getFieldWidth = (field) => {
-    if (field == "sector" || field == "boardOfDirectors") return 6;
-    if (field == "companyBrief") return 12;
-    else return 4;
-  };
-
   renderCompanyList = () => {
     return this.state.companyList.map((el) => {
       return <option>{el}</option>;

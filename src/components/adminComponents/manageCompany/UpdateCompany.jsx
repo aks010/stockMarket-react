@@ -12,7 +12,6 @@ class UpdateCompany extends React.Component {
       companyName: "",
       ceo: "",
       turnover: null,
-
       boardOfDirectors: "",
       companyBrief: "",
     },
@@ -29,7 +28,6 @@ class UpdateCompany extends React.Component {
         companyName: "",
         ceo: "",
         turnover: null,
-
         boardOfDirectors: "",
         companyBrief: "",
       },
@@ -109,7 +107,7 @@ class UpdateCompany extends React.Component {
       try {
         response = await API.put(`/company/update/${this.state.companyName}`, {
           ...this.state.data,
-          sector: this.state.sector,
+          sector: { sectorName: this.state.sector },
         });
         this.handleResponse(response);
       } catch (e) {
