@@ -9,6 +9,7 @@ import React from "react";
 import XLSX from "xlsx";
 import { EXCEL_MAPPER } from "../../globals/configs";
 import API from "../../Api";
+import { RenderMessage } from "../../globals/helper";
 
 export default class SheetJSApp extends React.Component {
   constructor(props) {
@@ -17,10 +18,25 @@ export default class SheetJSApp extends React.Component {
       data: [] /* Array of Arrays e.g. [["a","b"],[1,2]] */,
       cols: [] /* Array of column objects e.g. { name: "C", K: 2 } */,
       parsedData: [],
+      displayMessage: false,
+      messageUI: null,
+      spinner: false,
     };
     this.handleFile = this.handleFile.bind(this);
     this.exportFile = this.exportFile.bind(this);
   }
+
+  clearForm = () => {
+    this.setState({
+      data: [],
+      cols: [],
+      parsedData: [],
+      displayMessage: false,
+      messageUI: null,
+      spinner: false,
+    });
+  };
+
   handleFile(file /*:File*/) {
     /* Boilerplate to set up FileReader */
     const reader = new FileReader();
@@ -74,26 +90,76 @@ export default class SheetJSApp extends React.Component {
     if (rABS) reader.readAsBinaryString(file);
     else reader.readAsArrayBuffer(file);
   }
+
+  closeDisplayMessage = () => {
+    this.clearForm();
+    // this.setState({ displayMessage: false,  });
+  };
+
+  openDisplayMessage = () => {
+    this.setState({ displayMessage: true });
+  };
+
+  handleResponse = (response) => {
+    console.log(response.data);
+    if (response.status == 201 || response.status == 200) {
+      const messageUI = RenderMessage(
+        201,
+        <div>
+          Successfully Uploaded Stock Price Data!!
+          <br />
+          <br />
+          SUMMARY
+          <ul>
+            <li>Company Name: {response.data.companyName}</li>
+            <li>Stock Exchange: {response.data.exchangeName}</li>
+            <li>Number of Records Imported: {response.data.cntRecords}</li>
+          </ul>
+        </div>,
+        this.closeDisplayMessage
+      );
+      this.setState({ messageUI, displayMessage: true, spinner: false });
+    } else {
+      const messageUI = RenderMessage(
+        response.status,
+        response.data.message,
+        this.closeDisplayMessage
+      );
+      this.setState({ messageUI, displayMessage: true, spinner: false });
+    }
+  };
+
   exportFile = async () => {
     /* convert state to workbook */
     const ws = XLSX.utils.aoa_to_sheet(this.state.data);
     console.log("EXPORTING PARSED DATA");
     console.log(this.state.parsedData);
+    this.setState({ spinner: true });
+    try {
+      const response = await API.post(
+        "/stockPrices/uploadExcel",
+        this.state.parsedData
+      );
 
-    const response = await API.post(
-      "/stockPrices/uploadExcel",
-      this.state.parsedData
-    );
-    console.log("GOT RESPONSE");
-
-    console.log(response);
-
+      this.handleResponse(response);
+    } catch (e) {
+      console.log("Error");
+      console.log(e);
+      if (e.response) this.handleResponse(e.response);
+      else
+        this.handleResponse({
+          status: null,
+          data: { message: "Unable to Connect to Server" },
+        });
+    }
     // const wb = XLSX.utils.book_new();
     // XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
     // /* generate XLSX file and send to client */
     // XLSX.writeFile(wb, "sheetjs.xlsx");
   };
   render() {
+    // console.log(this.state);
+    console.log(this.state);
     return (
       <DragDropFile handleFile={this.handleFile}>
         <div className="row">
@@ -103,13 +169,29 @@ export default class SheetJSApp extends React.Component {
         </div>
         <div className="row mt-4 mb-3">
           <div className="d-flex col-xs-12 flex-row-reverse">
-            <button
-              disabled={!this.state.data.length}
-              className="btn btn-success col-md-3"
-              onClick={this.exportFile}
-            >
-              Upload Excel
-            </button>
+            {!this.state.spinner ? (
+              <button
+                disabled={!this.state.data.length}
+                className="btn btn-primary col-md-3"
+                onClick={this.exportFile}
+              >
+                Upload Excel
+              </button>
+            ) : (
+              <button class="btn btn-primary" type="button" disabled>
+                <span
+                  class="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                {"  "}
+                Uploading...
+              </button>
+            )}
+          </div>
+
+          <div class="container mt-5">
+            {this.state.displayMessage && this.state.messageUI}
           </div>
         </div>
         <div className="row">
