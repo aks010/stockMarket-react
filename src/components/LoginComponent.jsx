@@ -1,5 +1,5 @@
 import React from "react";
-import API2 from "../Api2";
+import API from "../Api";
 import { RenderMessage } from "../globals/helper";
 import { Link } from "react-router-dom";
 import { SetUserRole } from "../globals/configs";
@@ -62,7 +62,7 @@ class LoginComponent extends React.Component {
     e.preventDefault();
     let response;
     try {
-      response = await API2.post(`/users/login`, this.state.data);
+      response = await API.post(`/users/login`, this.state.data);
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");

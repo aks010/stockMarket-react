@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { EXCHANGE_JSON_FIELD } from "../../../globals/configs";
-import API2 from "../../../Api2";
-import API1 from "../../../Api";
+import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
 class AddNewCompany extends React.Component {
@@ -40,7 +39,7 @@ class AddNewCompany extends React.Component {
   };
 
   componentDidMount = async () => {
-    const sectorResponse = await API2.get("/sectors/list");
+    const sectorResponse = await API.get("/sectors/list");
 
     const sectorList = sectorResponse.data;
     this.setState({ sectorList });
@@ -78,8 +77,7 @@ class AddNewCompany extends React.Component {
     e.preventDefault();
     let response;
     try {
-      response = await API2.post(`/stockExchange/new`, this.state.data);
-      await API1.post(`/stockExchange/new`, this.state.data);
+      response = await API.post(`/stockExchange/new`, this.state.data);
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");

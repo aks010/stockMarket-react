@@ -123,9 +123,9 @@ class CompareCompany extends React.Component {
     return (
       <div>
         <div class="h4" style={{ display: "flex", alignItems: "center" }}>
-          Compare Companies
+          Analyze Companies and Sectors
         </div>
-        <form class=" mt-3 row needs-validation" noValidate>
+        <form class=" mt-5 row needs-validation" noValidate>
           <div class={`col-md-3`}>
             <label for={"from"} class="form-label">
               From

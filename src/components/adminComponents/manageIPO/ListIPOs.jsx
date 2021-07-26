@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import API2 from "../../../Api2";
 import API1 from "../../../Api";
 
 class ListIPOs extends React.Component {

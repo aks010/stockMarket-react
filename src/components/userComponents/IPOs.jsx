@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import API2 from "../../../Api2";
-import API1 from "../../Api";
+import API from "../../Api";
 
 class IPOs extends React.Component {
   state = {
@@ -9,9 +8,8 @@ class IPOs extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API1.get("ipo/list");
-    console.log("RESPONESSEES");
-    console.log(response);
+    const response = await API.get("ipo/list");
+    console.log(response.data);
     this.setState({ ipoList: response.data });
   };
 
@@ -46,59 +44,12 @@ class IPOs extends React.Component {
     return (
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
-          <h4 style={{ display: "flex", alignItems: "center" }}>IPO List</h4>
-          {/* <div class="d-flex">
-            <Link
-              type="button"
-              to="/admin/ipo/new"
-              class="btn btn-outline-success btn-sm ms-3 md-3 "
-              style={{ display: "flex", alignItems: "center" }}
-            >
-              Add New IPO
-            </Link>
-          </div> */}
+          <h4 style={{ display: "flex", alignItems: "center" }}>
+            Upcoming IPOs
+          </h4>
         </div>
 
-        {/* <div class="container mt-5 d-flex justify-content-between">
-          <div>Stock Exchanges</div>
-
-          <div>
-            <div class="input-group input-group-sm mb-3">
-              <span class="input-group-text" id="inputGroup-sizing-sm">
-                Filter
-              </span>
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter Company Name"
-                aria-label="queryCompany"
-                aria-describedby="inputGroup-sizing-sm"
-              />
-            </div>
-          </div>
-        </div> */}
-
-        <div class="mt-3 .bg-light">
-          {this.renderList()}
-          {/* <div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-            <div class="row mt-3 p-3 bg-light">
-              <div class=" col col-sm-3 m-3">Company Name</div>
-              <div class="col col-sm-3 m-3">Stock Exchange List </div>
-              <div class="col col-sm-4 m-3">Brief</div>
-              <button class="col col-sm m-3 btn btn-outline-success btn-sm">
-                Edit
-              </button>
-            </div>
-          </div> */}
-        </div>
+        <div class="mt-3 .bg-light">{this.renderList()}</div>
       </div>
     );
   }

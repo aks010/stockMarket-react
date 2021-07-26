@@ -115,28 +115,28 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/user/compare/company"
+              to="/user/companies"
               isActive={(match, location) => {
                 if (!match) {
                   return false;
                 }
               }}
             >
-              Compare Company
+              Companies
             </NavLink>
           </li>
           <li class="nav-item">
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/user/compare/sectors"
+              to="/user/exchanges"
               isActive={(match, location) => {
                 if (!match) {
                   return false;
                 }
               }}
             >
-              Compare Sectors
+              Stock Exchanges
             </NavLink>
           </li>
 
@@ -144,14 +144,14 @@ class Navbar extends React.Component {
             <NavLink
               class="nav-link"
               aria-current="page"
-              to="/user/others"
+              to="/user/compare/company"
               isActive={(match, location) => {
                 if (!match) {
                   return false;
                 }
               }}
             >
-              Others
+              Analyze
             </NavLink>
           </li>
         </ul>

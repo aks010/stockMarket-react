@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import API2 from "../../../Api2";
-import API1 from "../../../Api";
+import API from "../../../Api";
 
 class ListExchanges extends React.Component {
   state = {
@@ -9,7 +8,7 @@ class ListExchanges extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API1.get("/sectors/list");
+    const response = await API.get("/sectors/list");
     console.log("RESPONESSEES");
     console.log(response);
     this.setState({ sectorList: response.data });

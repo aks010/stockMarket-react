@@ -3,8 +3,7 @@ import React from "react";
 import { EXCHANGE_JSON_FIELD } from "../../../globals/configs";
 
 import { Link } from "react-router-dom";
-import API2 from "../../../Api2";
-import API1 from "../../../Api";
+import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
 class UpdateCompany extends React.Component {
@@ -46,7 +45,7 @@ class UpdateCompany extends React.Component {
     const currExchange = pathSplit[pathSplit.length - 1];
     console.log(currExchange);
 
-    const response = await API2.get(`/stockExchange/${currExchange}`);
+    const response = await API.get(`/stockExchange/${currExchange}`);
     console.log(response.data);
     const data = {};
     Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
@@ -87,11 +86,7 @@ class UpdateCompany extends React.Component {
 
     let response;
     try {
-      response = await API2.put(
-        `/stockExchange/update/${this.state.currExchange}`,
-        this.state.data
-      );
-      await API1.put(
+      response = await API.put(
         `/stockExchange/update/${this.state.currExchange}`,
         this.state.data
       );

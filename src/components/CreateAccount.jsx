@@ -1,5 +1,5 @@
 import React from "react";
-import API2 from "../Api2";
+import API from "../Api";
 import { RenderMessage } from "../globals/helper";
 import { USER_JSON_FIELD } from "../globals/configs";
 import { Link } from "react-router-dom";
@@ -69,7 +69,7 @@ class LoginComponent extends React.Component {
     let response;
     this.setState({ spinner: true });
     try {
-      response = await API2.post(`/users/new`, this.state.data);
+      response = await API.post(`/users/new`, this.state.data);
       this.handleResponse(response);
       this.setState({ spinner: false });
     } catch (e) {

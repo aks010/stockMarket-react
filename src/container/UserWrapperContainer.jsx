@@ -8,9 +8,9 @@ import {
   Redirect,
 } from "react-router-dom";
 import CompareCompany from "../components/userComponents/CompareCompany";
-import CompareSectors from "../components/userComponents/CompareSectors";
 import IPOs from "../components/userComponents/IPOs";
-import Other from "../components/userComponents/Other";
+import ExchangeList from "../components/userComponents/ExchangeList";
+import CompanyList from "../components/userComponents/CompanyList";
 
 class UserWrapperContainer extends React.Component {
   componentDidMount() {
@@ -24,14 +24,14 @@ class UserWrapperContainer extends React.Component {
           <Route path={`/user/compare/company`}>
             <CompareCompany />
           </Route>
-          <Route path={`/user/compare/sectors`}>
-            <CompareSectors />
-          </Route>
           <Route path={`/user/ipos`}>
             <IPOs />
           </Route>
-          <Route path={`/user/others`}>
-            <Other />
+          <Route path={`/user/exchanges`}>
+            <ExchangeList />
+          </Route>
+          <Route path={`/user/companies`}>
+            <CompanyList />
           </Route>
           <Route path={`/user/`}>
             <IPOs />
