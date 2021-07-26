@@ -53,7 +53,7 @@ class LoginComponent extends React.Component {
       );
       this.setState({ messageUI, displayMessage: true });
       window.setTimeout(() => {
-        window.location.href = "/login";
+        window.location.href = "/authenticate";
       }, 3000);
     } else {
       const messageUI = RenderMessage(
@@ -69,7 +69,7 @@ class LoginComponent extends React.Component {
     let response;
     this.setState({ spinner: true });
     try {
-      response = await API.post(`/users/new`, this.state.data);
+      response = await API.post(`/register`, this.state.data);
       this.handleResponse(response);
       this.setState({ spinner: false });
     } catch (e) {
