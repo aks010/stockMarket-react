@@ -53,7 +53,7 @@ class LoginComponent extends React.Component {
       );
       this.setState({ messageUI, displayMessage: true });
       window.setTimeout(() => {
-        window.location.href = "/authenticate";
+        window.location.href = "/login";
       }, 3000);
     } else {
       const messageUI = RenderMessage(

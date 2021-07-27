@@ -2,12 +2,12 @@ import React from "react";
 import API from "../Api";
 import { RenderMessage } from "../globals/helper";
 import { Link } from "react-router-dom";
-import { SetUserRole } from "../globals/configs";
+import { AuthorizeUser } from "../globals/configs";
 
 class LoginComponent extends React.Component {
   state = {
     data: {
-      email: "",
+      username: "",
       password: "",
     },
     displayMessage: false,
@@ -17,7 +17,7 @@ class LoginComponent extends React.Component {
   clearForm = () => {
     this.setState({
       data: {
-        email: "",
+        username: "",
         password: "",
       },
       displayMessage: false,
@@ -38,14 +38,14 @@ class LoginComponent extends React.Component {
     this.setState({ data });
   };
   handleResponse = (response) => {
-    if (response.status == 201) {
+    if (response.status == 201 || response.status == 200) {
       const messageUI = RenderMessage(
         201,
         "Successfully Logged In!!",
         this.closeDisplayMessage
       );
       this.setState({ messageUI, displayMessage: true });
-      SetUserRole(response.data.role);
+      AuthorizeUser(response.data);
       window.setTimeout(() => {
         window.location.href = `/${response.data.role}`;
       });
@@ -62,7 +62,7 @@ class LoginComponent extends React.Component {
     e.preventDefault();
     let response;
     try {
-      response = await API.post(`/users/login`, this.state.data);
+      response = await API.post(`/authenticate/`, this.state.data);
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");
@@ -84,17 +84,17 @@ class LoginComponent extends React.Component {
               {this.state.displayMessage && this.state.messageUI}
             </div>
             <div class="mb-3">
-              <label for="email" class="form-label">
-                Email address
+              <label for="username" class="form-label">
+                User Name
               </label>
               <input
-                type="email"
+                type="username"
                 class="form-control"
-                id="email"
-                aria-describedby="emailHelp"
-                name="email"
+                id="username"
+                aria-describedby="usernameHelp"
+                name="username"
                 onChange={this.handleFormInput}
-                value={this.state.data.email}
+                value={this.state.data.username}
               />
             </div>
             <div class="mb-3">

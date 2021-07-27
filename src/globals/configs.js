@@ -1,4 +1,3 @@
-let USER_ROLE = null;
 export const ADMIN = "admin";
 export const USER = "user";
 
@@ -8,11 +7,32 @@ export function GetUserRole() {
     : window.localStorage.getItem("role");
 }
 
+export function GetUserToken() {
+  return window.localStorage.getItem("token") == undefined
+    ? null
+    : window.localStorage.getItem("token");
+}
+
+export function SetUserToken(token) {
+  window.localStorage.setItem("token", token);
+}
+
 export function SetUserRole(role) {
-  if (role == "admin") USER_ROLE = ADMIN;
-  else if (role == "user") USER_ROLE = USER;
-  else window.localStorage.removeItem("role");
-  window.localStorage.setItem("role", USER_ROLE);
+  window.localStorage.setItem("role", role);
+}
+
+export function isUserAuthorized() {
+  return window.localStorage.getItem("token") == undefined ? false : true;
+}
+
+export function AuthorizeUser({ role, token }) {
+  window.localStorage.setItem("token", token);
+  window.localStorage.setItem("role", role);
+}
+
+export function LogoutUser() {
+  window.localStorage.removeItem("role");
+  window.localStorage.removeItem("token");
 }
 
 export const EXCEL_MAPPER = {
@@ -62,6 +82,8 @@ export const IPO_JSON_FIELD = {
   openDateTime: OPEN_DATA_TIME,
   remarks: IPO_REMARKS,
   company: "Company",
+  openDate: "Open Date",
+  openTime: "Open Time",
 };
 
 const USER_NAME = "User Name";

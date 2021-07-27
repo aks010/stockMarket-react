@@ -48,7 +48,7 @@ class ListExchanges extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            Stock Exchanges List
+            Sectors List
           </h4>
           <div class="d-flex">
             <Link

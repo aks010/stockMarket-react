@@ -51,10 +51,13 @@ class CompareCompany extends React.Component {
     const companyList = this.state.formElementsData.filter(
       (o) => o.type == "company"
     );
-    const sectorList = this.state.formElementsData.filter(
+    let sectorList = this.state.formElementsData.filter(
       (o) => o.type == "sector"
     );
     const data = this.state.data;
+    console.log("ASKFNKAFSF AFLNASFLJASBFL AFAJLSFNAJSFb");
+    console.log(sectorList);
+    sectorList = sectorList.map((o) => o.sectorName);
 
     data.sectorList = sectorList;
     data.companyList = companyList;

@@ -8,7 +8,7 @@ class IPOs extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API.get("ipo/list");
+    const response = await API.get("ipo/list/upcoming");
     console.log(response.data);
     this.setState({ ipoList: response.data });
   };

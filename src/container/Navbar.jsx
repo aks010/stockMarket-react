@@ -189,7 +189,7 @@ class Navbar extends React.Component {
             >
               <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <div className="navbar-nav d-flex container-fluid">
                 {this.renderOptionsList()}
               </div>

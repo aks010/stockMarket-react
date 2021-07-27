@@ -11,6 +11,8 @@ class AddNewIPO extends React.Component {
       totalNumberOfShares: null,
       openDateTime: null,
       remarks: "",
+      openDate: "",
+      openTime: "",
     },
     company: "",
     companyList: [],
@@ -24,8 +26,9 @@ class AddNewIPO extends React.Component {
       data: {
         pricePerShare: "",
         totalNumberOfShares: "",
-        openDateTime: "",
         remarks: "",
+        openDate: "",
+        openTime: "",
       },
       company: "",
       displayMessage: false,
@@ -69,7 +72,7 @@ class AddNewIPO extends React.Component {
     if (response.status == 201) {
       messageUI = RenderMessage(
         201,
-        "Successfully Created Company!!",
+        "Successfully Created IPO!!",
         this.closeDisplayMessage
       );
     } else {
@@ -85,7 +88,11 @@ class AddNewIPO extends React.Component {
   handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = this.state.data;
-
+    data["openDateTime"] = new Date(data["openDate"] + " " + data["openTime"]);
+    delete data["openDate"];
+    delete data["openTime"];
+    console.log("HELLO");
+    console.log(data);
     if (this.state.company == "") {
       this.setState({
         messageUI: RenderMessage(
@@ -99,8 +106,10 @@ class AddNewIPO extends React.Component {
       let response;
       try {
         response = await API.post(`/ipo/new/${this.state.company}`, {
-          ...this.state.data,
-          openDateTime: new Date(this.state.data.openDateTime),
+          ...data,
+          // openDateTime: new Date(
+          //   this.state.data.openDate + this.state.data.openTime
+          // ),
         });
         this.handleResponse(response);
       } catch (e) {
@@ -201,25 +210,7 @@ class AddNewIPO extends React.Component {
               />
               <div class="valid-feedback">Looks good!</div>
             </div>
-
             <div class={`col-md-4`}>
-              <label for={"openDateTime"} class="form-label">
-                {IPO_JSON_FIELD["openDateTime"]}
-              </label>
-              <input
-                type="text"
-                class="form-control"
-                id={"openDateTime"}
-                value={this.state.data["openDateTime"]}
-                name={"openDateTime"}
-                placeholder="DD/MM/YYYY HH:MM:SS"
-                onChange={this.handleFormInput}
-                required
-              />
-              <div class="valid-feedback">Looks good!</div>
-            </div>
-
-            <div class={`col-md-6`}>
               <label for={"company"} class="form-label">
                 {IPO_JSON_FIELD["company"]}
               </label>
@@ -240,11 +231,44 @@ class AddNewIPO extends React.Component {
             </div>
 
             <div class={`col-md-6`}>
+              <label for={"openDate"} class="form-label">
+                {IPO_JSON_FIELD["openDate"]}
+              </label>
+              <input
+                type="date"
+                class="form-control"
+                id={"openDate"}
+                value={this.state.data["openDate"]}
+                name={"openDate"}
+                // placeholder="DD/MM/YYYY HH:MM:SS"
+                onChange={this.handleFormInput}
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+            <div class={`col-md-6`}>
+              <label for={"openTime"} class="form-label">
+                {IPO_JSON_FIELD["openTime"]}
+              </label>
+              <input
+                type="time"
+                class="form-control"
+                id={"openTime"}
+                value={this.state.data["openTime"]}
+                name={"openTime"}
+                // placeholder="DD/MM/YYYY HH:MM:SS"
+                onChange={this.handleFormInput}
+                required
+              />
+              <div class="valid-feedback">Looks good!</div>
+            </div>
+
+            <div class={`col-md-12`}>
               <label for={"remarks"} class="form-label">
                 {IPO_JSON_FIELD["remarks"]}
               </label>
               <input
-                type="text"
+                type="textarea"
                 class="form-control"
                 id={"remarks"}
                 value={this.state.data["remarks"]}

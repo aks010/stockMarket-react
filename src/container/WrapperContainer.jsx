@@ -6,7 +6,13 @@ import { Switch, Route, BrowserRouter as Router } from "react-router-dom";
 import AdminWrapperContainer from "./AdminWrapperContainer";
 import UserWrapperContainer from "./UserWrapperContainer";
 import LoginComponent from "../components/LoginComponent";
-import { SetUserRole, GetUserRole, ADMIN, USER } from "../globals/configs";
+import {
+  USER,
+  ADMIN,
+  GetUserRole,
+  isUserAuthorized,
+  LogoutUser,
+} from "../globals/configs";
 import CreateAccount from "../components/CreateAccount";
 
 class WrapperContainer extends React.Component {
@@ -16,12 +22,19 @@ class WrapperContainer extends React.Component {
   };
 
   componentDidMount() {
+    if (isUserAuthorized()) {
+      if (window.location.pathname == "/") {
+        this.setState({ userRole: GetUserRole() });
+        window.location.href = "/" + GetUserRole;
+      }
+    }
     this.setState({ userRole: GetUserRole() });
   }
 
   handleLogout = () => {
     console.log("Logging out");
-    window.localStorage.removeItem("role");
+    // window.localStorage.removeItem("role");
+    LogoutUser();
     window.location.href = "/login";
   };
 
