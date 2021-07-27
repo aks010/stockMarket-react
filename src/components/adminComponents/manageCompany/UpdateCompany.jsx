@@ -194,7 +194,7 @@ class UpdateCompany extends React.Component {
                 {COMPANY_JSON_FIELD["companyName"]}
               </label>
               <input
-                disabled
+                // disabled
                 type="text"
                 class="form-control"
                 id={"companyName"}

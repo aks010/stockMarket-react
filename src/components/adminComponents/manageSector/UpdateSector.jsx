@@ -30,9 +30,7 @@ class UpdateSector extends React.Component {
   clearForm = () => {
     this.setState({
       data: {
-        exchangeName: "",
-        contactAddress: "",
-        remarks: "",
+        sectorName: "",
         brief: "",
       },
       displayMessage: false,
@@ -120,7 +118,7 @@ class UpdateSector extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            Update Exchange
+            Update Sector
           </h4>
           <div class="d-flex">
             <Link

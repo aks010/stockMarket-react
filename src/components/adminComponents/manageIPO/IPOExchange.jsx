@@ -125,7 +125,7 @@ class IPOExchange extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            IPOs Stock Exchange List
+            IPOs Stock Exchange List: {this.state.company}
           </h4>
           <div class="d-flex">
             <select

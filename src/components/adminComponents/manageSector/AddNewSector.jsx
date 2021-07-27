@@ -111,7 +111,7 @@ class AddNewCompany extends React.Component {
       <div>
         <div class="d-flex" style={{ justifyContent: "space-between" }}>
           <h4 style={{ display: "flex", alignItems: "center" }}>
-            Add New Stock Exchange
+            Add New Sector
           </h4>
           <div class="d-flex">
             <Link
