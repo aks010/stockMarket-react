@@ -178,7 +178,7 @@ class Navbar extends React.Component {
               />
               STOCKMARKET
             </a>
-            <button
+            {/* <button
               class="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
@@ -188,8 +188,8 @@ class Navbar extends React.Component {
               aria-label="Toggle navigation"
             >
               <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            </button> */}
+            <div class=" navbar-collapse" id="navbarSupportedContent">
               <div className="navbar-nav d-flex container-fluid">
                 {this.renderOptionsList()}
               </div>
