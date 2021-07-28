@@ -59,7 +59,7 @@ class AddNewCompany extends React.Component {
     if (response.status == 201) {
       const messageUI = RenderMessage(
         201,
-        "Successfully Created Company!!",
+        "Successfully Created Stock Exchange!!",
         this.closeDisplayMessage
       );
       this.setState({ messageUI, displayMessage: true });

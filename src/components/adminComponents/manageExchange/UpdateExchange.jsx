@@ -64,7 +64,7 @@ class UpdateCompany extends React.Component {
     if (response.status == 201 || response.status == 200) {
       const messageUI = RenderMessage(
         201,
-        "Successfully Updated Company!!",
+        "Successfully Updated Stock Exchange!!",
         this.closeDisplayMessage
       );
       this.setState({ messageUI, displayMessage: true });

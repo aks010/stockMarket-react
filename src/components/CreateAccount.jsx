@@ -69,7 +69,10 @@ class LoginComponent extends React.Component {
     let response;
     this.setState({ spinner: true });
     try {
-      response = await API.post(`/register`, this.state.data);
+      response = await API.post(`/register`, {
+        ...this.state.data,
+        role: "user",
+      });
       this.handleResponse(response);
       this.setState({ spinner: false });
     } catch (e) {
@@ -131,7 +134,7 @@ class LoginComponent extends React.Component {
                 value={this.state.data.password}
               />
             </div>
-            <div class={`container-fluid mb-3`}>
+            {/* <div class={`container-fluid mb-3`}>
               <label for={"role"} class="form-label">
                 {USER_JSON_FIELD["role"]}
               </label>
@@ -150,7 +153,7 @@ class LoginComponent extends React.Component {
                 <option value="admin">Admin</option>
               </select>
               <div class="valid-feedback">Looks good!</div>
-            </div>
+            </div> */}
 
             <div class="mb-3 container-fluid">
               <label for="mobile" class="form-label">
