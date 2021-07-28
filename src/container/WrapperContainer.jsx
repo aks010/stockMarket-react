@@ -25,7 +25,7 @@ class WrapperContainer extends React.Component {
     if (isUserAuthorized()) {
       if (window.location.pathname == "/") {
         this.setState({ userRole: GetUserRole() });
-        window.location.href = "/" + GetUserRole;
+        window.location.href = "/" + GetUserRole();
       }
     }
     this.setState({ userRole: GetUserRole() });
