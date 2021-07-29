@@ -1,10 +1,9 @@
 <p align="center">
- <img width="100px" src="public/logo-tab.png" align="center" alt="GitHub Readme Stats" />
+ <img width="100px" src="public/logo-tab.png" align="center" alt="stox app logo" />
  <h2 align="center">Stoxapp</h2>
  <p align="center">
 A platform to create, manage and analyze stocks, sectors, stock exhanges and ipos.</p>
 </p>
-</div>
 
 ## Checkout Directly
 
