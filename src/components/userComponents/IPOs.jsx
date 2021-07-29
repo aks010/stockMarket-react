@@ -25,12 +25,6 @@ class IPOs extends React.Component {
           <div class="col col-sm-2 m-3">{ipo.totalNumberOfShares}</div>
           <div class="col col-sm-3 m-3">{show}</div>
           <div class="col col-sm-3 m-3">{ipo.remarks}</div>
-          <Link
-            to={`/admin/ipo/update/${ipo.company.companyName}`}
-            class="col col-sm m-3 btn btn-outline-success btn-sm align-self-center"
-          >
-            Edit
-          </Link>
         </div>
       );
     });
