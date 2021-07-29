@@ -1,12 +1,12 @@
 # STOXAPP
 
-A Platform to create manage and analyze stocks, ipos within the stock exhanges and sectors.
+A platform to create manage and analyze stocks, ipos within the stock exhanges and sectors.
 
-## CHECKOUT DIRECTLY
+## Checkout Directly
 
 [stoxapp.herokuapp.com]
 
-## INSTALLATION
+## Installation
 
 ```
 npm install
