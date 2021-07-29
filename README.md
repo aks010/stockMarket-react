@@ -1,6 +1,6 @@
 # STOXAPP
 
-A platform to create manage and analyze stocks, ipos within the stock exhanges and sectors.
+A platform to create, manage and analyze stocks, sectors, stock exhanges and ipos.
 
 ## Checkout Directly
 
