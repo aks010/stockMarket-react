@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { IPO_JSON_FIELD } from "../../globals/configs";
 import API from "../../Api";
+import { GetAuthHeaderToken } from "../../globals/configs";
 import { RenderMessage } from "../../globals/helper";
 
 class CompanyExchangeMap extends React.Component {
@@ -38,14 +39,22 @@ class CompanyExchangeMap extends React.Component {
     const key = this.props.formId;
 
     if (type == "sector") {
-      const response = await API.get("/sectors/list");
+      const response = await API.get("/sectors/list/", {
+        headers: {
+          Authorization: GetAuthHeaderToken(),
+        },
+      });
       const sectorList = response.data.map((o) => {
         return o.sectorName;
       });
       sectorList.sort();
       this.setState({ sectorList });
     } else if (type == "company") {
-      const response = await API.get("/stockExchange/list");
+      const response = await API.get("/stockExchange/list/", {
+        headers: {
+          Authorization: GetAuthHeaderToken(),
+        },
+      });
       const exchangeList = response.data.map((o) => {
         return o.exchangeName;
       });
@@ -64,7 +73,11 @@ class CompanyExchangeMap extends React.Component {
     this.props.addData(key, data);
     this.setState({ data });
 
-    const response = await API.get(`/stockExchange/list/${exchangeName}`);
+    const response = await API.get(`/stockExchange/list/${exchangeName}/`, {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     const companyList = response.data.map((o) => {
       return o.companyName;
     });

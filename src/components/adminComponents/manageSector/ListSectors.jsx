@@ -2,13 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 import API from "../../../Api";
 
+import { GetAuthHeaderToken } from "../../../globals/configs";
+
 class ListExchanges extends React.Component {
   state = {
     sectorList: [],
   };
 
   componentDidMount = async () => {
-    const response = await API.get("/sectors/list");
+    const response = await API.get("/sectors/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log("RESPONESSEES");
     console.log(response);
     this.setState({ sectorList: response.data });

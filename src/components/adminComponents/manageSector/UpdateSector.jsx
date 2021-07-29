@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
+import { GetAuthHeaderToken } from "../../../globals/configs";
+
 class UpdateSector extends React.Component {
   state = {
     data: {
@@ -14,17 +16,7 @@ class UpdateSector extends React.Component {
     },
     displayMessage: false,
     messageUI: null,
-  };
-
-  clearForm = () => {
-    this.setState({
-      data: {
-        sectorName: "",
-        brief: "",
-      },
-      displayMessage: false,
-      messageUI: null,
-    });
+    currSector: "",
   };
 
   clearForm = () => {
@@ -51,7 +43,11 @@ class UpdateSector extends React.Component {
     const currSector = pathSplit[pathSplit.length - 1];
     console.log(currSector);
 
-    const response = await API.get(`/sectors/${currSector}`);
+    const response = await API.get(`/sectors/${currSector}/`, {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log(response.data);
     const data = {};
     Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
@@ -93,8 +89,13 @@ class UpdateSector extends React.Component {
     let response;
     try {
       response = await API.put(
-        `/sectors/update/${this.state.currSector}`,
-        this.state.data
+        `/sectors/update/${this.state.currSector}/`,
+        this.state.data,
+        {
+          headers: {
+            Authorization: GetAuthHeaderToken(),
+          },
+        }
       );
       this.handleResponse(response);
     } catch (e) {

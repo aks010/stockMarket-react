@@ -12,6 +12,11 @@ export function GetUserToken() {
     ? null
     : window.localStorage.getItem("token");
 }
+export function GetAuthHeaderToken() {
+  return window.localStorage.getItem("token") == undefined
+    ? null
+    : `Bearer ${window.localStorage.getItem("token")}`;
+}
 
 export function SetUserToken(token) {
   window.localStorage.setItem("token", token);

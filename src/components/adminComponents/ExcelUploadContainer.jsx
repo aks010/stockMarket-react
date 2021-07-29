@@ -10,6 +10,7 @@ import XLSX from "xlsx";
 import { EXCEL_MAPPER } from "../../globals/configs";
 import API from "../../Api";
 import { RenderMessage } from "../../globals/helper";
+import { GetAuthHeaderToken } from "../../globals/configs";
 
 export default class SheetJSApp extends React.Component {
   constructor(props) {
@@ -137,8 +138,13 @@ export default class SheetJSApp extends React.Component {
     this.setState({ spinner: true });
     try {
       const response = await API.post(
-        "/stockPrices/uploadExcel",
-        this.state.parsedData
+        "/stockPrices/uploadExcel/",
+        this.state.parsedData,
+        {
+          headers: {
+            Authorization: GetAuthHeaderToken(),
+          },
+        }
       );
 
       this.handleResponse(response);

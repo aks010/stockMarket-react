@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IPO_JSON_FIELD } from "../../../globals/configs";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class IPOExchange extends React.Component {
   state = {
@@ -27,13 +28,21 @@ class IPOExchange extends React.Component {
     const companyName = pathSplit[pathSplit.length - 1];
     console.log(companyName);
 
-    const exchangeResponse = await API.get("/stockExchange/list");
+    const exchangeResponse = await API.get("/stockExchange/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     const exchangeList = exchangeResponse.data.map((o) => {
       return o.exchangeName;
     });
     exchangeList.sort();
 
-    const response = await API.get(`/ipo/${companyName}`);
+    const response = await API.get(`/ipo/${companyName}/`, {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log(response.data);
     // const data = {};
     // Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
@@ -53,8 +62,6 @@ class IPOExchange extends React.Component {
         "Successfully Mapped!!",
         this.closeDisplayMessage
       );
-      // const response = await API.get(`/ipo/${this.state.company}`);
-      // this.setState({ ipoExchangeList: response.data.stockExchanges });
     } else {
       messageUI = RenderMessage(
         response.status,
@@ -82,7 +89,7 @@ class IPOExchange extends React.Component {
 
       try {
         response = await API.get(
-          `/ipo/map/${this.state.company}/${this.state.addExchange}`
+          `/ipo/map/${this.state.company}/${this.state.addExchange}/`
         );
 
         this.handleResponse(response);

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import API from "../../Api";
+import { GetAuthHeaderToken } from "../../globals/configs";
 
 class IPOs extends React.Component {
   state = {
@@ -8,7 +9,11 @@ class IPOs extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API.get("ipo/list/upcoming");
+    const response = await API.get("ipo/list/upcoming/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log(response.data);
     this.setState({ ipoList: response.data });
   };

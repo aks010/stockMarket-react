@@ -62,7 +62,7 @@ class LoginComponent extends React.Component {
     e.preventDefault();
     let response;
     try {
-      response = await API.post(`/authenticate/`, this.state.data);
+      response = await API.post(`/authenticate`, this.state.data);
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");

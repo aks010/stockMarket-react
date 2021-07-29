@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import API1 from "../../../Api";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class ListIPOs extends React.Component {
   state = {
@@ -8,9 +9,12 @@ class ListIPOs extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API1.get("ipo/list");
-    console.log("RESPONESSEES");
-    console.log(response);
+    const response = await API1.get("ipo/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
+
     this.setState({ ipoList: response.data });
   };
 

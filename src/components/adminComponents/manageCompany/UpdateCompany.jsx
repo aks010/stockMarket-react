@@ -5,6 +5,7 @@ import { COMPANY_JSON_FIELD } from "../../../globals/configs";
 import { Link } from "react-router-dom";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class UpdateCompany extends React.Component {
   state = {
@@ -52,14 +53,22 @@ class UpdateCompany extends React.Component {
     const companyName = pathSplit[pathSplit.length - 1];
     console.log(companyName);
 
-    const response = await API.get(`/company/name/${companyName}`);
+    const response = await API.get(`/company/name/${companyName}/`, {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log(response.data);
     const data = {};
     Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
     const sector = response.data.sector.sectorName;
     console.log(data);
 
-    const sectorResponse = await API.get("/sectors/list");
+    const sectorResponse = await API.get("/sectors/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
 
     const sectorList = sectorResponse.data;
     sectorList.sort();
@@ -105,10 +114,18 @@ class UpdateCompany extends React.Component {
     } else {
       let response;
       try {
-        response = await API.put(`/company/update/${this.state.companyName}`, {
-          ...this.state.data,
-          sector: { sectorName: this.state.sector },
-        });
+        response = await API.put(
+          `/company/update/${this.state.companyName}/`,
+          {
+            ...this.state.data,
+            sector: { sectorName: this.state.sector },
+          },
+          {
+            headers: {
+              Authorization: GetAuthHeaderToken(),
+            },
+          }
+        );
         this.handleResponse(response);
       } catch (e) {
         console.log("Error");

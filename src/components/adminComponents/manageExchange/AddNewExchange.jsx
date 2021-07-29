@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { EXCHANGE_JSON_FIELD } from "../../../globals/configs";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
 
@@ -39,7 +40,11 @@ class AddNewCompany extends React.Component {
   };
 
   componentDidMount = async () => {
-    const sectorResponse = await API.get("/sectors/list");
+    const sectorResponse = await API.get("/sectors/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
 
     const sectorList = sectorResponse.data;
     this.setState({ sectorList });
@@ -77,7 +82,11 @@ class AddNewCompany extends React.Component {
     e.preventDefault();
     let response;
     try {
-      response = await API.post(`/stockExchange/new`, this.state.data);
+      response = await API.post(`/stockExchange/new/`, this.state.data, {
+        headers: {
+          Authorization: GetAuthHeaderToken(),
+        },
+      });
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { SECTOR_JSON_FIELD } from "../../../globals/configs";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class AddNewCompany extends React.Component {
   state = {
@@ -65,7 +66,11 @@ class AddNewCompany extends React.Component {
     e.preventDefault();
     let response;
     try {
-      response = await API.post(`/sectors/new`, this.state.data);
+      response = await API.post(`/sectors/new/`, this.state.data, {
+        headers: {
+          Authorization: GetAuthHeaderToken(),
+        },
+      });
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");

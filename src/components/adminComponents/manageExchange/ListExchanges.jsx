@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import API from "../../../Api";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class ListExchanges extends React.Component {
   state = {
@@ -9,7 +10,11 @@ class ListExchanges extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API.get("stockExchange/list");
+    const response = await API.get("stockExchange/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log("RESPONESSEES");
     console.log(response);
     this.setState({ exchangeList: response.data });
@@ -19,10 +24,6 @@ class ListExchanges extends React.Component {
     console.log(this.state);
     return this.state.exchangeList.map((exchange) => {
       let exchangeList = [];
-      // company.compStockMap.forEach((o) =>
-      //   exchangeList.push(o.stockExchange.exchangeName)
-      // );
-
       return (
         <div class="row mt-3 p-3 bg-light">
           <div class="col col-sm-2 m-3">{exchange.exchangeName}</div>
@@ -38,10 +39,6 @@ class ListExchanges extends React.Component {
         </div>
       );
     });
-    // console.log("Print");
-    // console.log(ui);
-
-    return <div>Hello</div>;
   };
 
   render() {

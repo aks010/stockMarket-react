@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import API from "../../Api";
+import { GetAuthHeaderToken } from "../../globals/configs";
 
 class ListAllCompanies extends React.Component {
   state = {
@@ -35,9 +36,17 @@ class ListAllCompanies extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API.get("company/list");
+    const response = await API.get("company/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log(response.data);
-    const exchangeResponse = await API.get("/stockExchange/list");
+    const exchangeResponse = await API.get("/stockExchange/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
 
     const exchangeList = exchangeResponse.data.map((o) => {
       return o.exchangeName;
@@ -57,7 +66,11 @@ class ListAllCompanies extends React.Component {
     ) {
       console.log("WILL BE UPDATE");
       if (filter.company.length < 2) {
-        const response = await API.get("company/list");
+        const response = await API.get("company/list/", {
+          headers: {
+            Authorization: GetAuthHeaderToken(),
+          },
+        });
         const companyList = response.data;
 
         if (filter.exchange != "") {
@@ -82,7 +95,12 @@ class ListAllCompanies extends React.Component {
         }
       } else {
         const response = await API.get(
-          `company/list/pattern/${filter.company}`
+          `company/list/pattern/${filter.company}/`,
+          {
+            headers: {
+              Authorization: GetAuthHeaderToken(),
+            },
+          }
         );
         const companyList = response.data;
 

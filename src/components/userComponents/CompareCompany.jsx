@@ -6,6 +6,7 @@ import API from "../../Api";
 import { RenderMessage } from "../../globals/helper";
 // import { Button } from "bootstrap";
 import ComparisionForm from "./ComparisionForm";
+import { GetAuthHeaderToken } from "../../globals/configs";
 
 class CompareCompany extends React.Component {
   state = {
@@ -55,25 +56,22 @@ class CompareCompany extends React.Component {
       (o) => o.type == "sector"
     );
     const data = this.state.data;
-    console.log("ASKFNKAFSF AFLNASFLJASBFL AFAJLSFNAJSFb");
-    console.log(sectorList);
     sectorList = sectorList.map((o) => o.sectorName);
 
     data.sectorList = sectorList;
     data.companyList = companyList;
-    console.log("PRIENTNETENTETNETN");
-    console.log(data);
-    console.log(data.companyList);
-    console.log(data.sectorList);
 
     let response;
     try {
-      response = await API.post(`/stockPrices/compare`, data);
+      response = await API.post(`/stockPrices/compare/`, data, {
+        headers: {
+          Authorization: GetAuthHeaderToken(),
+        },
+      });
       this.handleResponse(response);
       this.setState({ chartData: response.data });
     } catch (e) {
       console.log("Error");
-      console.log(e.response);
       if (e.response) this.handleResponse(e.response);
       else
         this.handleResponse({

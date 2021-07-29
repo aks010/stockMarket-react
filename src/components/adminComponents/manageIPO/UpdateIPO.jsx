@@ -4,6 +4,7 @@ import { IPO_JSON_FIELD } from "../../../globals/configs";
 
 import { Link } from "react-router-dom";
 import API from "../../../Api";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 import { RenderMessage } from "../../../globals/helper";
 
 class UpdateIPO extends React.Component {
@@ -32,7 +33,11 @@ class UpdateIPO extends React.Component {
     const companyName = pathSplit[pathSplit.length - 1];
     console.log(companyName);
 
-    const response = await API.get(`/ipo/${companyName}`);
+    const response = await API.get(`/ipo/${companyName}/`, {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log(response.data);
     const data = {};
     Object.keys(this.state.data).forEach((o) => (data[o] = response.data[o]));
@@ -72,9 +77,17 @@ class UpdateIPO extends React.Component {
 
     let response;
     try {
-      response = await API.put(`/ipo/update/${this.state.company}`, {
-        ...this.state.data,
-      });
+      response = await API.put(
+        `/ipo/update/${this.state.company}/`,
+        {
+          ...this.state.data,
+        },
+        {
+          headers: {
+            Authorization: GetAuthHeaderToken(),
+          },
+        }
+      );
       this.handleResponse(response);
     } catch (e) {
       console.log("Error");

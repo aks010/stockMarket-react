@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IPO_JSON_FIELD } from "../../../globals/configs";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class CompanyExchangeMap extends React.Component {
   state = {
@@ -39,8 +40,16 @@ class CompanyExchangeMap extends React.Component {
   };
 
   componentDidMount = async () => {
-    const companyResponse = await API.get("/company/list");
-    const exchangeResponse = await API.get("/stockExchange/list");
+    const companyResponse = await API.get("/company/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
+    const exchangeResponse = await API.get("/stockExchange/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
 
     const companyList = companyResponse.data.map((o) => {
       return o.companyName;
@@ -95,9 +104,14 @@ class CompanyExchangeMap extends React.Component {
       let response;
       try {
         response = await API.post(
-          `/company/map/${this.state.data.company}/${this.state.data.exchange}`,
+          `/company/map/${this.state.data.company}/${this.state.data.exchange}/`,
           {
             companyCode: this.state.data.companyCode,
+          },
+          {
+            headers: {
+              Authorization: GetAuthHeaderToken(),
+            },
           }
         );
         this.handleResponse(response);

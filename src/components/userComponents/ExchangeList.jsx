@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import API from "../../Api";
+import { GetAuthHeaderToken } from "../../globals/configs";
 
 class ListExchanges extends React.Component {
   state = {
@@ -8,7 +9,11 @@ class ListExchanges extends React.Component {
   };
 
   componentDidMount = async () => {
-    const response = await API.get("stockExchange/list");
+    const response = await API.get("stockExchange/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log("RESPONESSEES");
     console.log(response);
     this.setState({ exchangeList: response.data });

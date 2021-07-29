@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { IPO_JSON_FIELD } from "../../../globals/configs";
 import API from "../../../Api";
 import { RenderMessage } from "../../../globals/helper";
+import { GetAuthHeaderToken } from "../../../globals/configs";
 
 class AddNewIPO extends React.Component {
   state = {
@@ -45,7 +46,11 @@ class AddNewIPO extends React.Component {
   };
 
   componentDidMount = async () => {
-    const companyResponse = await API.get("/company/list");
+    const companyResponse = await API.get("/company/list/", {
+      headers: {
+        Authorization: GetAuthHeaderToken(),
+      },
+    });
     console.log("OKKK");
     console.log(companyResponse);
     const companyList = companyResponse.data.map((o) => {
@@ -105,12 +110,17 @@ class AddNewIPO extends React.Component {
     } else {
       let response;
       try {
-        response = await API.post(`/ipo/new/${this.state.company}`, {
-          ...data,
-          // openDateTime: new Date(
-          //   this.state.data.openDate + this.state.data.openTime
-          // ),
-        });
+        response = await API.post(
+          `/ipo/new/${this.state.company}/`,
+          {
+            ...data,
+          },
+          {
+            headers: {
+              Authorization: GetAuthHeaderToken(),
+            },
+          }
+        );
         this.handleResponse(response);
       } catch (e) {
         console.log("Error");
