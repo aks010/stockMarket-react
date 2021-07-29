@@ -2,7 +2,7 @@
 
 A Platform to create manage and analyze stocks, ipos within the stock exhanges and sectors.
 
-# CHECKOUT DIRECTLY
+## CHECKOUT DIRECTLY
 
 [stoxapp.herokuapp.com]
 
